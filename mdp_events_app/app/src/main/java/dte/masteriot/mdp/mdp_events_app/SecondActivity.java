@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 import java.net.URL;
 import java.text.ParseException;
@@ -57,10 +59,15 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         t = findViewById(R.id.circulo_domingo);
         t.setBackgroundResource(R.drawable.circle_diselected);
 
+        ImageView picture = findViewById(R.id.picture);
+        picture.setAdjustViewBounds(true);
+        Picasso.get().load("https://www.madrid.es/UnidadesDescentralizadas/DistritoMoratalaz/Actividades/2023/octubre/exposicion345.jpg").into(picture);
+
 
         String dtStart = "2023-12-15T09:27:37Z";
         TextView fechaIni = (TextView) findViewById(R.id.fechaIni_dato);
         fechaIni.setText(getDate(dtStart));
+
 
         lugar = "ETSIST, Campus sur UPM";
         link = "https://www.etsist.upm.es/";
