@@ -20,7 +20,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="9"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp">
@@ -254,13 +254,14 @@
 
 
     <ImageButton
-        android:id="@+id/searchImageButton"
+        android:id="@+id/fav_button"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="center"
         android:contentDescription="Boton me interesa"
-        android:src="@drawable/baseline_control_point_24" />
+        android:background="@null"
+        android:src="@drawable/favourite_45" />
 
 
 </LinearLayout>
