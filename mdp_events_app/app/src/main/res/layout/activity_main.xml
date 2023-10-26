@@ -40,12 +40,12 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/list"
+            android:id="@+id/update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="listLayout"
-            android:text="List"
+            android:onClick="update_events"
+            android:text="Update events"
             android:layout_margin="5dp"/>
 
         <Button

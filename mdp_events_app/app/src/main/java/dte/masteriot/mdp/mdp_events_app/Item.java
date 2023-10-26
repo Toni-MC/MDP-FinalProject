@@ -4,26 +4,43 @@ public class Item {
     // This class contains the actual data of each item of the dataset
 
     private String title;
-    private String subtitle;
-    private Long key; // In this app we use keys of type Long
+    private String description;
+    private int is_free;
+    private String price;
+    private String dtstart;
+    private String dtend;
+    private String time;
+    private String link;
+    private String event_location;
 
-    Item(String title, String subtitle, Long key) {
+    private Long key;
+
+
+    Item(String title, String description, int is_free,
+         String price, String dtstart, String dtend,
+         String time, String link, String event_location , Long key) {
+
         this.title = title;
-        this.subtitle = subtitle;
+        this.description = description;
+        this.price = price;
+        this.dtstart = dtstart;
+        this.dtend = dtend;
+        this.time = time;
+        this.link = link;
+        this.event_location = event_location;
         this.key = key;
     }
 
     public String getTitle() {
         return title;
     }
-
-    public String getSubtitle() {
-        return subtitle;
+    public String getDescription() {
+        return description;
     }
-
     public Long getKey() {
         return key;
     }
+
 
     // We override the "equals" operator to only compare keys
     // (useful when searching for the position of a specific key in a list of Items):
