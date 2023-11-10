@@ -29,9 +29,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import dte.masteriot.mdp.mdp_events_app.roomDB.AppDatabase;
+import dte.masteriot.mdp.mdp_events_app.roomDB.DatabaseClient;
+import dte.masteriot.mdp.mdp_events_app.roomDB.Favourites;
+
 public class SecondActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-
+    long eventId = 123456789;
     LatLng latLng;
     String link;
     String lugar;
@@ -109,9 +113,20 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
                 if(favouriteSelected){
                     favButton.setImageResource(R.drawable.favourite_45);
                     favouriteSelected = false;
+
+                    AppDatabase db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
+                    db.databaseWriteExecutor.execute(() -> db.favouriteDao().deleteFavourite(eventId));
+
+
+
+
                 }else{
                     favouriteSelected = true;
                     favButton.setImageResource(R.drawable.favorite_selected_45);
+
+                    AppDatabase db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
+                    db.databaseWriteExecutor.execute(() -> db.favouriteDao().insert(new Favourites(eventId, "hola")));
+
                 }
             }
         });
