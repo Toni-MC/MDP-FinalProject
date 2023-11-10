@@ -1,4 +1,4 @@
-package dte.masteriot.mdp.mdp_events_app;
+package dte.masteriot.mdp.mdp_events_app.main;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;

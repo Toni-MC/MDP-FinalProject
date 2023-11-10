@@ -1,4 +1,4 @@
-package dte.masteriot.mdp.mdp_events_app;
+package dte.masteriot.mdp.mdp_events_app.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
+
+import dte.masteriot.mdp.mdp_events_app.model.Dataset;
+import dte.masteriot.mdp.mdp_events_app.model.Item;
+import dte.masteriot.mdp.mdp_events_app.R;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 

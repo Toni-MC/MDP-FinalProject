@@ -21,7 +21,7 @@
             android:value="AIzaSyAG5bI3zDlHWyEJGS5ZPx7r4NYonOypyc8" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SecondActivity"
+            android:name=".main.SecondActivity"
             android:exported="true"/>
     </application>
 

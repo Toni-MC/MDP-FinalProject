@@ -1,10 +1,13 @@
-package dte.masteriot.mdp.mdp_events_app;
+package dte.masteriot.mdp.mdp_events_app.adapter;
 
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import dte.masteriot.mdp.mdp_events_app.model.Item;
+import dte.masteriot.mdp.mdp_events_app.R;
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
 

@@ -1,4 +1,4 @@
-package dte.masteriot.mdp.mdp_events_app;
+package dte.masteriot.mdp.mdp_events_app.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.view.MotionEvent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.OnItemActivatedListener;
+
+import dte.masteriot.mdp.mdp_events_app.model.Dataset;
+import dte.masteriot.mdp.mdp_events_app.main.SecondActivity;
 
 public class MyOnItemActivatedListener implements OnItemActivatedListener<Long> {
 

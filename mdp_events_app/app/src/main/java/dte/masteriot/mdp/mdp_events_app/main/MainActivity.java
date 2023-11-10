@@ -1,12 +1,10 @@
-package dte.masteriot.mdp.mdp_events_app;
+package dte.masteriot.mdp.mdp_events_app.main;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -22,6 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import dte.masteriot.mdp.mdp_events_app.model.Dataset;
+import dte.masteriot.mdp.mdp_events_app.adapter.MyAdapter;
+import dte.masteriot.mdp.mdp_events_app.adapter.MyItemDetailsLookup;
+import dte.masteriot.mdp.mdp_events_app.adapter.MyItemKeyProvider;
+import dte.masteriot.mdp.mdp_events_app.adapter.MyOnItemActivatedListener;
+import dte.masteriot.mdp.mdp_events_app.R;
 
 
 public class MainActivity extends AppCompatActivity {

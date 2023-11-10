@@ -1,4 +1,4 @@
-package dte.masteriot.mdp.mdp_events_app;
+package dte.masteriot.mdp.mdp_events_app.model;
 
 import android.util.Log;
 
@@ -17,7 +17,7 @@ public class Dataset {
     private static final String TAG = "TAGListOfItems, Dataset";
     private List<Item> listofitems;
 
-    Dataset(String json) {
+    public Dataset(String json) {
         Log.d(TAG, "Dataset() called");
         listofitems = new ArrayList<>();
         construct_event_list(json);
@@ -69,15 +69,15 @@ public class Dataset {
 
     }
 
-    int getSize() {
+    public int getSize() {
         return listofitems.size();
     }
 
-    Item getItemAtPosition(int pos) {
+    public Item getItemAtPosition(int pos) {
         return listofitems.get(pos);
     }
 
-    Long getKeyAtPosition(int pos) {
+    public Long getKeyAtPosition(int pos) {
         return (listofitems.get(pos).getKey());
     }
 

@@ -1,8 +1,6 @@
-package dte.masteriot.mdp.mdp_events_app;
+package dte.masteriot.mdp.mdp_events_app.model;
 
 import com.google.android.gms.maps.model.LatLng;
-
-import java.lang.reflect.Array;
 
 public class Item {
     // This class contains the actual data of each item of the dataset
