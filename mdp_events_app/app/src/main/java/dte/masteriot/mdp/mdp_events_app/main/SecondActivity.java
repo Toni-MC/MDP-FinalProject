@@ -1,6 +1,7 @@
 package dte.masteriot.mdp.mdp_events_app.main;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,15 +24,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import dte.masteriot.mdp.mdp_events_app.R;
+
+import dte.masteriot.mdp.mdp_events_app.roomDB.AppDatabase;
+import dte.masteriot.mdp.mdp_events_app.roomDB.DatabaseClient;
+import dte.masteriot.mdp.mdp_events_app.roomDB.Favourites;
 
 public class SecondActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-
+    long eventId = 123456789;
     LatLng latLng;
     String link;
     String lugar;
@@ -109,9 +114,20 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
                 if(favouriteSelected){
                     favButton.setImageResource(R.drawable.favourite_45);
                     favouriteSelected = false;
+
+                    AppDatabase db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
+                    db.databaseWriteExecutor.execute(() -> db.favouriteDao().deleteFavourite(eventId));
+
+
+
+
                 }else{
                     favouriteSelected = true;
                     favButton.setImageResource(R.drawable.favorite_selected_45);
+
+                    AppDatabase db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
+                    db.databaseWriteExecutor.execute(() -> db.favouriteDao().insert(new Favourites(eventId, "hola")));
+
                 }
             }
         });
