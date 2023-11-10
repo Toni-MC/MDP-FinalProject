@@ -37,18 +37,9 @@ public class LoadURLContents implements Runnable {
     @SuppressLint("LongLogTag")
     @Override
     public void run() {
-
-        if(expectedContent_type == "application/json"){
-            run_str();
-        }
-    }
-
-    private void run_str(){
-        // initial preparation of the message to communicate with the UI Thread:
         Message msg = creator.obtainMessage();
         Bundle msg_data = msg.getData();
 
-//        String response = ""; // This string will contain the loaded contents of a text resource
         StringBuilder response = new StringBuilder();
         HttpURLConnection urlConnection;
 
@@ -62,11 +53,6 @@ public class LoadURLContents implements Runnable {
             urlConnection = (HttpURLConnection) url.openConnection();
             String actualContentType =  urlConnection.getContentType();// content-type header from HTTP server
             InputStream is = urlConnection.getInputStream();
-
-//            String json2 = loadJSONFromAsset(urlConnection);
-
-//            int i =0;
-
 
             // Extract MIME type and subtype (get rid of the possible parameters present in the content-type header
             // Content-type: type/subtype;parameter1=value1;parameter2=value2...
@@ -101,68 +87,4 @@ public class LoadURLContents implements Runnable {
         msg.sendToTarget();
     }
 
-    private void run_image(){
-        Bitmap bitmap = null;
-
-        String response = "";
-
-        // initial preparation of the message to communicate with the UI Thread:
-        Message msg = creator.obtainMessage();
-        Bundle msg_data = msg.getData();
-
-        HttpURLConnection urlConnection;
-
-        // Build the string with thread and Class names (used in logs):
-        String threadAndClass = "Thread = " + Thread.currentThread().getName() + ", Class = " +
-                this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".") + 1);
-
-
-        try {
-            URL url = new URL(string_URL);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            String actualContentType = urlConnection.getContentType(); // content-type header from HTTP server
-            InputStream is = urlConnection.getInputStream();
-
-            // Extract MIME type and subtype (get rid of the possible parameters present in the content-type header
-            // Content-type: type/subtype;parameter1=value1;parameter2=value2...
-            if((actualContentType != null) && (actualContentType.contains(";"))) {
-                int beginparam = actualContentType.indexOf(";", 0);
-                actualContentType = actualContentType.substring(0, beginparam);
-            }
-
-            if (expectedContent_type.equals(actualContentType)) {
-                // We check that the actual content type got from the server is the expected one
-                // and if it is, download text
-                bitmap= BitmapFactory.decodeStream( is );
-            }
-            else { // content type not supported
-                response = "Actual content type different from expected ("+
-                        actualContentType + " vs " + expectedContent_type + ")";
-            }
-            urlConnection.disconnect();
-        } catch (Exception e) {
-            response = e.toString();
-        }
-
-        msg_data.putParcelable("image", bitmap);
-
-        msg.sendToTarget();
-    }
-
-    public String loadJSONFromAsset(HttpURLConnection urlConnection) {
-
-        String json = null;
-        try {
-            InputStream is = urlConnection.getInputStream();
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
 }

@@ -1,5 +1,9 @@
 package dte.masteriot.mdp.mdp_events_app;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.lang.reflect.Array;
+
 public class Item {
     // This class contains the actual data of each item of the dataset
 
@@ -12,13 +16,14 @@ public class Item {
     private String time;
     private String link;
     private String event_location;
+    private LatLng latlng;
 
     private Long key;
 
 
     Item(String title, String description, int is_free,
          String price, String dtstart, String dtend,
-         String time, String link, String event_location , Long key) {
+         String time, String link, String event_location , LatLng latlng, Long key) {
 
         this.title = title;
         this.description = description;
@@ -28,6 +33,7 @@ public class Item {
         this.time = time;
         this.link = link;
         this.event_location = event_location;
+        this.latlng = latlng;
         this.key = key;
     }
 

@@ -42,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        show_data(null);
-
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
@@ -55,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 if((string_result = msg.getData().getString("text")) != null) {
                     json_str = string_result;
-                    show_data(json_str);
+                    update_dataset(json_str);
                 }
             }
         };
@@ -67,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Create an executor for the background tasks:
         es = Executors.newSingleThreadExecutor();
+
+        update_events();
     }
 
     @Override
@@ -77,10 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     // ------ Buttons' on-click listeners ------ //
 
-    public void update_events(View view) {
-        // Button to see in a linear fashion has been clicked:
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        text.setText("Loading " + URL_IMAGE + "..."); // Inform the user by means of the TextView
+    public void update_events() {
 
         // Execute the loading task in background:
         LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, URL_JSON);
@@ -115,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    void show_data(String json){
+    void update_dataset(String json){
         dataset = new Dataset(json);
         // Prepare the RecyclerView:
         recyclerView = findViewById(R.id.recyclerView);
@@ -140,7 +135,5 @@ public class MainActivity extends AppCompatActivity {
                 .withOnItemActivatedListener(onItemActivatedListener)
                 .build();
         recyclerViewAdapter.setSelectionTracker(tracker);
-
     }
-
 }
