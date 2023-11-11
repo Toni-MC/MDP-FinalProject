@@ -124,7 +124,6 @@ public class ListActivity extends AppCompatActivity {
 
     void update_dataset(String json){
         dataset = new Dataset(json);
-
         set_item_images();
         configure_recyclerview(dataset);
 
