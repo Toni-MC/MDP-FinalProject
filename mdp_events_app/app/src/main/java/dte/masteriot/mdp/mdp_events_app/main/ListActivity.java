@@ -29,7 +29,7 @@ import dte.masteriot.mdp.mdp_events_app.adapter.MyOnItemActivatedListener;
 import dte.masteriot.mdp.mdp_events_app.R;
 
 
-public class MainActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "TAGListOfItems, MainActivity";
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_list);
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
@@ -87,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
         es.execute(loadURLContents);
     }
 
+    public void set_item_images() {
+
+        // Execute the loading task in background:
+        LoadEventsImages loadEventsImages = new LoadEventsImages(handler, dataset);
+        es.execute(loadEventsImages);
+    }
+
     public void gridLayout(View view) {
         // Button to see in a grid fashion has been clicked:
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -117,6 +124,13 @@ public class MainActivity extends AppCompatActivity {
 
     void update_dataset(String json){
         dataset = new Dataset(json);
+
+        set_item_images();
+        configure_recyclerview(dataset);
+
+    }
+
+    public void configure_recyclerview(Dataset dataset){
         // Prepare the RecyclerView:
         recyclerView = findViewById(R.id.recyclerView);
         MyAdapter recyclerViewAdapter = new MyAdapter(dataset);

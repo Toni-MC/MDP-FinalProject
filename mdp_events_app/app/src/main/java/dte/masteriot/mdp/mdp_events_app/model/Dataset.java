@@ -7,7 +7,15 @@ import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +67,9 @@ public class Dataset {
                 }
                 id = Integer.valueOf(userDetail.getInt("id"));
 
+
+// img with src ending .png
+
                 listofitems.add(new Item(title, description, is_free, price,
                                         dtstart, dtend, time, link, event_location, latlng, (long) id));
 
@@ -95,4 +106,10 @@ public class Dataset {
         removeItemAtPosition(getPositionOfKey(key));
     }
 
+
 }
+
+
+
+//text.setText(string_result);
+//                text.setText(links.toString());

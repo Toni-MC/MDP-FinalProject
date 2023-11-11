@@ -13,6 +13,7 @@ public class Item {
     private String dtend;
     private String time;
     private String link;
+    private String image_link;
     private String event_location;
     private LatLng latlng;
 
@@ -43,6 +44,16 @@ public class Item {
     }
     public Long getKey() {
         return key;
+    }
+
+    public String getLink(){ return link; }
+
+    public void setImageLink(String link){
+        this.image_link = link;
+    }
+
+    public String getImageLink(){
+        return image_link;
     }
 
 
