@@ -44,6 +44,9 @@ public class LoadEventsImages implements Runnable {
     @SuppressLint("LongLogTag")
     @Override
     public void run() {
+        Message msg;
+        Bundle msg_data;
+
         String domain = "https://www.madrid.es";
         for (int i = 0; i < dataset.getSize(); i++) {
             Item item = dataset.getItemAtPosition(i);
@@ -57,6 +60,12 @@ public class LoadEventsImages implements Runnable {
                 image_url = "https://www.madrid.es/UnidadesDescentralizadas/Educacion_Ambiental/EspecialesInformativos/HabitatMadridActividadesAmbientales/Imagenes/Exposiciones/Expo100A%C3%B1osMestaCasaCampo.jpg";
             }
             item.setImageLink(image_url);
+
+            msg = creator.obtainMessage(); // message to send to the UI thread
+            msg_data = msg.getData(); // message data
+            msg_data.putInt("progress", i+1); // (key, value = progress)
+            msg.sendToTarget(); // send the message to the target
+
         }
     }
 

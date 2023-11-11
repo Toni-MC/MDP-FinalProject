@@ -9,6 +9,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.selection.ItemKeyProvider;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
@@ -42,11 +44,15 @@ public class ListActivity extends AppCompatActivity {
     ExecutorService es;
     private Dataset dataset;
     Handler handler;
+    AsyncManager asyncManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        asyncManager = new ViewModelProvider(this).get(AsyncManager.class);
+
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
@@ -124,8 +130,18 @@ public class ListActivity extends AppCompatActivity {
 
     void update_dataset(String json){
         dataset = new Dataset(json);
-        set_item_images();
-        configure_recyclerview(dataset);
+//        set_item_images();
+        asyncManager.launchBackgroundTask(dataset);
+
+        Observer progressObserver = new Observer<Integer>(){
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer == 10){
+                    configure_recyclerview(dataset);
+                }
+            }
+        };
+        asyncManager.getProgress().observe(this, progressObserver);
 
     }
 
