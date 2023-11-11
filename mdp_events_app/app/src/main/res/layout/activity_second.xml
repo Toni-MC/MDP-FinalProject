@@ -52,7 +52,7 @@
                 android:id="@+id/fechaIni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fecha inicio"
+                android:text="Start date"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"/>
 
@@ -69,7 +69,7 @@
                 android:id="@+id/fechaFin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fecha fin"
+                android:text="End date"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"/>
 
@@ -87,7 +87,7 @@
                 android:id="@+id/periocidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Periocidad"
+                android:text="Periocity"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"/>
 
@@ -195,14 +195,14 @@
                 android:id="@+id/lugar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lugar"
+                android:text="Location"
                 android:textSize="20sp"
                 android:layout_marginTop="15dp"/>
             <TextView
                 android:id="@+id/lugar_dato"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ETSIST, Campus sur UPM"
+                android:text=""
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"/>
@@ -224,7 +224,7 @@
                 android:id="@+id/mapButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Abrir en Maps"
+                android:text="Open in Maps"
                 android:textSize="15sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="7dp"/>
@@ -242,7 +242,7 @@
                 android:id="@+id/linkButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ver web oficial"
+                android:text="Go to website"
                 android:textSize="15sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
