@@ -55,7 +55,6 @@ public class LoadEventsImages implements Runnable {
 //        dic_default_images.put("musica", "/Musica");
 //        dic_default_images.put("teatro_av", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales" +
 //                "/CircoMagia,/CuentacuentosTiteresMarionetas");
-
         for (int i = 0; i < dataset.getSize(); i++) {
             Item item = dataset.getItemAtPosition(i);
             string_URL = item.getLink();
@@ -68,10 +67,9 @@ public class LoadEventsImages implements Runnable {
                 image_url = "https://www.madrid.es/UnidadesDescentralizadas/Educacion_Ambiental/EspecialesInformativos/HabitatMadridActividadesAmbientales/Imagenes/Exposiciones/Expo100A%C3%B1osMestaCasaCampo.jpg";
             }
             item.setImageLink(image_url);
-
             msg = creator.obtainMessage(); // message to send to the UI thread
             msg_data = msg.getData(); // message data
-            msg_data.putInt("progress", i+1); // (key, value = progress)
+            msg_data.putInt("progress", i); // (key, value = progress)
             msg.sendToTarget(); // send the message to the target
 
         }

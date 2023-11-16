@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -134,16 +135,27 @@ public class ListActivity extends AppCompatActivity {
         dataset = new Dataset(json, event_type);
 //        set_item_images();
         asyncManager.launchBackgroundTask(dataset);
+        LoadingDialog loadingDialog = new LoadingDialog(this);
 
+        int max_limit = dataset.getSize();
+        if(max_limit>40){
+            max_limit = max_limit/2; //to show the list when the half is loaded
+        }
+        int finalMax_limit = max_limit;
         Observer progressObserver = new Observer<Integer>(){
             @Override
-            public void onChanged(Integer integer) {
-                if(integer == 10){
+            public void onChanged(Integer n_item) {
+                loadingDialog.onContentChanged();
+                if(n_item == (finalMax_limit - 1)){
+                    loadingDialog.cancel();
                     configure_recyclerview(dataset);
                 }
             }
         };
         asyncManager.getProgress().observe(this, progressObserver);
+
+        loadingDialog.onPreparePanel(finalMax_limit, null, null);
+        loadingDialog.show();
 
     }
 
