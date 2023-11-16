@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.OnItemActivatedListener;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import dte.masteriot.mdp.mdp_events_app.model.Dataset;
 import dte.masteriot.mdp.mdp_events_app.main.SecondActivity;
 
@@ -46,6 +48,21 @@ public class MyOnItemActivatedListener implements OnItemActivatedListener<Long> 
         Intent i = new Intent(context, SecondActivity.class);
         i.putExtra("text", "Clicked item with position = " + itemdetails.getPosition()
                 + " and key = " + itemdetails.getSelectionKey());
+        i.putExtra("title", dataset.getItemAtPosition(itemdetails.getPosition()).getTitle());
+        i.putExtra("descriptrion", dataset.getItemAtPosition(itemdetails.getPosition()).getDescription());
+        i.putExtra("is_free", dataset.getItemAtPosition(itemdetails.getPosition()).getIs_free());
+        i.putExtra("price", dataset.getItemAtPosition(itemdetails.getPosition()).getPrice());
+        i.putExtra("dtstart", dataset.getItemAtPosition(itemdetails.getPosition()).getDtstart());
+        i.putExtra("dtend", dataset.getItemAtPosition(itemdetails.getPosition()).getDtend());
+        i.putExtra("time", dataset.getItemAtPosition(itemdetails.getPosition()).getTime());
+        i.putExtra("link", dataset.getItemAtPosition(itemdetails.getPosition()).getLink());
+        i.putExtra("event_location", dataset.getItemAtPosition(itemdetails.getPosition()).getEvent_location());
+        i.putExtra("latitude", dataset.getItemAtPosition(itemdetails.getPosition()).getLatlng().latitude);
+        i.putExtra("longitude", dataset.getItemAtPosition(itemdetails.getPosition()).getLatlng().longitude);
+        i.putExtra("id", dataset.getItemAtPosition(itemdetails.getPosition()).getKey());
+
+
+
         context.startActivity(i);
         return true;
     }

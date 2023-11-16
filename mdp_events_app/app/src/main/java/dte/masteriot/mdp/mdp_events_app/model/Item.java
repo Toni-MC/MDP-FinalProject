@@ -46,6 +46,39 @@ public class Item {
     public String getDescription() {
         return description;
     }
+
+    public int getIs_free() {
+        return is_free;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getDtstart() {
+        return dtstart;
+    }
+
+    public String getDtend() {
+        return dtend;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getEvent_location() {
+        return event_location;
+    }
+
+    public LatLng getLatlng() {
+        return latlng;
+    }
+
     public Long getKey() {
         return key;
     }
