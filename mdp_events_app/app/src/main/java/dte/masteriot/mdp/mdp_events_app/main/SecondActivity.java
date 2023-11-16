@@ -1,7 +1,14 @@
 package dte.masteriot.mdp.mdp_events_app.main;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,9 +46,16 @@ import dte.masteriot.mdp.mdp_events_app.roomDB.AppDatabase;
 import dte.masteriot.mdp.mdp_events_app.roomDB.DatabaseClient;
 import dte.masteriot.mdp.mdp_events_app.roomDB.Favourites;
 
-public class SecondActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class SecondActivity extends AppCompatActivity implements OnMapReadyCallback, SensorEventListener {
     AppDatabase db;
     Boolean favouriteSelected;
+
+    private SensorManager sensorManager;
+    private Sensor lightSensor;
+
+    SharedPreferences sharedPref;
+    String sharedPref_key = "lightLevel";
+
 
 
     long id;
@@ -60,6 +74,13 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+        sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        //CHECK IF DYNAMIC CONFIGURATION IS ON
+        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -221,6 +242,47 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         supportMapFragment.getMapAsync(this);
 
     }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        int type = sensorEvent.sensor.getType();
+        int level = -1;
+        if(sharedPref.contains(sharedPref_key)){
+            level = sharedPref.getInt(sharedPref_key, -1);
+        }
+
+
+        if(type == Sensor.TYPE_LIGHT){
+            float value = sensorEvent.values[0];
+            Log.d("value", Float.toString(value));
+            if(value < 5 && level != 2){
+                changeStyle(2);
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(sharedPref_key, 2);
+                editor.apply();
+            }else if (value > 150 && level !=0){
+                changeStyle(0);
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(sharedPref_key, 0);
+                editor.apply();
+            }else if (level != 1){
+                changeStyle(1);
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(sharedPref_key, 1);
+                editor.apply();
+            }
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+        // In this app we do nothing if sensor's accuracy changes
+    }
+
 
     private void changeStyle(int style){
 

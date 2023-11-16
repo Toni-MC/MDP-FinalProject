@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".main.MainActivity">
+    tools:context=".main.MainActivity"
+    android:id="@+id/mainActLayout">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bSport"

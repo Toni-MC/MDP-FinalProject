@@ -1,15 +1,24 @@
 package dte.masteriot.mdp.mdp_events_app.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.selection.ItemKeyProvider;
@@ -32,7 +41,7 @@ import dte.masteriot.mdp.mdp_events_app.adapter.MyOnItemActivatedListener;
 import dte.masteriot.mdp.mdp_events_app.R;
 
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements SensorEventListener {
 
     private static final String TAG = "TAGListOfItems, MainActivity";
 
@@ -47,10 +56,18 @@ public class ListActivity extends AppCompatActivity {
     Handler handler;
     AsyncManager asyncManager;
 
+    private SensorManager sensorManager;
+    private Sensor lightSensor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        //CHECK IF DYNAMIC CONFIGURATION IS ON
+        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         asyncManager = new ViewModelProvider(this).get(AsyncManager.class);
 
@@ -184,4 +201,71 @@ public class ListActivity extends AppCompatActivity {
                 .build();
         recyclerViewAdapter.setSelectionTracker(tracker);
     }
+
+
+    // Methods related to the SensorEventListener interface:
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        int type = sensorEvent.sensor.getType();
+        if(type == Sensor.TYPE_LIGHT){
+            float value = sensorEvent.values[0];
+            Log.d("value", Float.toString(value));
+            if(value < 5){
+                changeStyle(2);
+            }else if (value > 150){
+                changeStyle(0);
+            }else{
+                changeStyle(1);
+            }
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+        // In this app we do nothing if sensor's accuracy changes
+    }
+
+
+    private void changeStyle(int style){
+        ConstraintLayout layout = findViewById(R.id.FirstActLayout);
+        RecyclerView recycler = findViewById(R.id.recyclerView);
+
+        Button seeselectionbutton = findViewById(R.id.seeselectionbutton);
+        Button update = findViewById(R.id.update);
+        Button grid = findViewById(R.id.grid);
+        //recyclerViewAdapter.notifyDataSetChanged();
+
+        switch (style){
+            case 0:{
+                layout.setBackgroundResource(R.color.light_background);
+                recycler.setBackgroundResource(R.color.light_background);
+                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+                update.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+                break;
+            }
+            case 1:{
+                layout.setBackgroundResource(R.color.medium_background);
+                recycler.setBackgroundResource(R.color.medium_background);
+                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+                update.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+                break;
+
+            }
+            case 2:{
+
+                layout.setBackgroundResource(R.color.dark_background);
+                recycler.setBackgroundResource(R.color.dark_background);
+                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+                update.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+                break;
+
+            }
+        }
+    }
+
+
 }
