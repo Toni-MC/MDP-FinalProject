@@ -2,6 +2,7 @@ package dte.masteriot.mdp.mdp_events_app.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -32,11 +33,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private SensorManager sensorManager;
     private Sensor lightSensor;
+    SharedPreferences sharedPref;
+    String sharedPref_key = "lightLevelMainAct";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+
+        sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -85,15 +90,31 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         int type = sensorEvent.sensor.getType();
+        int level = -1;
+        if(sharedPref.contains(sharedPref_key)){
+            level = sharedPref.getInt(sharedPref_key, -1);
+        }
         if(type == Sensor.TYPE_LIGHT){
             float value = sensorEvent.values[0];
             Log.d("value", Float.toString(value));
-            if(value < 5){
+            if(value < 5 && level != 2){
                 changeStyle(2);
-            }else if (value > 150){
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(sharedPref_key, 2);
+                editor.apply();
+            }else if (value > 150 && level !=0){
                 changeStyle(0);
-            }else{
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(sharedPref_key, 0);
+                editor.apply();
+            }else if (value < 150 && value > 5 && level != 1){
                 changeStyle(1);
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(sharedPref_key, 1);
+                editor.apply();
             }
         }
 

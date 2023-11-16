@@ -54,7 +54,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     private Sensor lightSensor;
 
     SharedPreferences sharedPref;
-    String sharedPref_key = "lightLevel";
+    String sharedPref_key = "lightLevelSecondAct";
 
 
 
@@ -250,8 +250,6 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         if(sharedPref.contains(sharedPref_key)){
             level = sharedPref.getInt(sharedPref_key, -1);
         }
-
-
         if(type == Sensor.TYPE_LIGHT){
             float value = sensorEvent.values[0];
             Log.d("value", Float.toString(value));
@@ -267,7 +265,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 0);
                 editor.apply();
-            }else if (level != 1){
+            }else if (value < 150 && value > 5 && level != 1){
                 changeStyle(1);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
