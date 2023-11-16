@@ -14,6 +14,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,7 +49,13 @@ public class LoadEventsImages implements Runnable {
         Message msg;
         Bundle msg_data;
 
-        String domain = "https://www.madrid.es";
+//        Dictionary<String, String> dic_default_images = new Hashtable<>();
+//        dic_default_images.put("deporte", "https://www.madrid.es/UnidadesDescentralizadas/Educacion_Ambiental/EspecialesInformativos/HabitatMadridActividadesAmbientales/Imagenes/Exposiciones/Expo100A%C3%B1osMestaCasaCampo.jpg");
+//        dic_default_images.put("expo_arte", "/Exposiciones,/ActividadesCalleArteUrbano");
+//        dic_default_images.put("musica", "/Musica");
+//        dic_default_images.put("teatro_av", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales" +
+//                "/CircoMagia,/CuentacuentosTiteresMarionetas");
+
         for (int i = 0; i < dataset.getSize(); i++) {
             Item item = dataset.getItemAtPosition(i);
             string_URL = item.getLink();

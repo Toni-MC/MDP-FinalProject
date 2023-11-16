@@ -26,9 +26,39 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void seeList(View v){
+    public void seeSportList(View v){
         Intent i = new Intent(MainActivity.this , ListActivity.class);
+        i.putExtra("event_type","deporte");
+//        i.putExtra("event_type","expo_arte");
+//        i.putExtra("event_type","musica");
+//        i.putExtra("event_type","teatro_av");
+        startActivity(i);
+    }
 
+    public void seeMusicList(View v){
+        Intent i = new Intent(MainActivity.this , ListActivity.class);
+//        i.putExtra("event_type","deporte");
+//        i.putExtra("event_type","expo_arte");
+        i.putExtra("event_type","musica");
+//        i.putExtra("event_type","teatro_av");
+        startActivity(i);
+    }
+
+    public void seeArtList(View v){
+        Intent i = new Intent(MainActivity.this , ListActivity.class);
+//        i.putExtra("event_type","deporte");
+        i.putExtra("event_type","expo_arte");
+//        i.putExtra("event_type","musica");
+//        i.putExtra("event_type","teatro_av");
+        startActivity(i);
+    }
+
+    public void seeTeatherList(View v){
+        Intent i = new Intent(MainActivity.this , ListActivity.class);
+//        i.putExtra("event_type","deporte");
+//        i.putExtra("event_type","expo_arte");
+//        i.putExtra("event_type","musica");
+        i.putExtra("event_type","teatro_av");
         startActivity(i);
     }
 

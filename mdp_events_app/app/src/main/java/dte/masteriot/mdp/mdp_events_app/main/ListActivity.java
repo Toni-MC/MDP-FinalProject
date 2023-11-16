@@ -129,7 +129,9 @@ public class ListActivity extends AppCompatActivity {
     }
 
     void update_dataset(String json){
-        dataset = new Dataset(json);
+        Intent imputIntent = getIntent();
+        String event_type = imputIntent.getStringExtra("event_type");
+        dataset = new Dataset(json, event_type);
 //        set_item_images();
         asyncManager.launchBackgroundTask(dataset);
 
