@@ -10,17 +10,30 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/Base.TextAppearance.AppCompat.Headline"
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp">
+        </ImageView>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="Placeholder for title" />
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/Base.TextAppearance.AppCompat.Headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:text="Placeholder for title" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

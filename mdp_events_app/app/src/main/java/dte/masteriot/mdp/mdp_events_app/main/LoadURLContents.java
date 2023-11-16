@@ -23,7 +23,6 @@ public class LoadURLContents implements Runnable {
     private String expectedContent_type;
     private String string_URL;
 
-
     public LoadURLContents(Handler handler, String cnt_type, String strURL) {
         // The constructor accepts 3 arguments:
         // The handler to the creator of this object
@@ -86,5 +85,4 @@ public class LoadURLContents implements Runnable {
         }
         msg.sendToTarget();
     }
-
 }
