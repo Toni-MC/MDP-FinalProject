@@ -83,8 +83,6 @@ public class Item {
         return key;
     }
 
-    public String getLink(){ return link; }
-
     public void setImageLink(String link){
         this.image_link = link;
     }
