@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".main.SecondActivity">
+    tools:context=".main.SecondActivity"
+    android:id="@+id/secondActLayout">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -23,16 +24,18 @@
         android:layout_weight="9"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:id="@+id/secondActScroll">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@null">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/titleEvent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Título de la actividad"
@@ -96,7 +99,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginTop="7dp">
+                android:layout_marginTop="7dp"
+                android:background="@null">
 
                 <TextView
                     android:id="@+id/circulo_lunes"

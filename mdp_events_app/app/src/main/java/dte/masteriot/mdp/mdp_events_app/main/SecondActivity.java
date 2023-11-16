@@ -10,12 +10,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -98,7 +102,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
         //Title
-        TextView titleTv = findViewById(R.id.title);
+        TextView titleTv = findViewById(R.id.titleEvent);
         titleTv.setText(title);
 
         //Dates
@@ -165,7 +169,6 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
                     AppDatabase db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
                     db.databaseWriteExecutor.execute(() -> db.favouriteDao().deleteFavourite(id));
 
-
                 }else{
                     //the event was selected
                     favouriteSelected = true;
@@ -218,6 +221,96 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         supportMapFragment.getMapAsync(this);
 
     }
+
+    private void changeStyle(int style){
+
+        LinearLayout layout = findViewById(R.id.secondActLayout);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        ScrollView scroll = findViewById(R.id.secondActScroll);
+
+        TextView title = findViewById(R.id.titleEvent);
+        TextView activityType = findViewById(R.id.activityType);
+        TextView fechaIni = findViewById(R.id.fechaIni);
+        TextView fechaIni_dato = findViewById(R.id.fechaIni_dato);
+        TextView fechaFin = findViewById(R.id.fechaFin);
+        TextView fechaFin_dato = findViewById(R.id.fechaFin_dato);
+        TextView periocidad = findViewById(R.id.periocidad);
+        TextView lugar = findViewById(R.id.lugar);
+        TextView lugar_dato = findViewById(R.id.lugar_dato);
+
+        Button mapButton = findViewById(R.id.mapButton);
+        Button linkButton = findViewById(R.id.linkButton);
+
+        switch (style){
+
+            case 0:{
+                layout.setBackgroundResource(R.color.light_background);
+                myToolbar.setBackgroundResource(R.color.light_primary);
+                scroll.setBackgroundResource(R.color.light_background);
+
+                title.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                activityType.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                fechaIni.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                fechaIni_dato.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                fechaFin.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                fechaFin_dato.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                periocidad.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                lugar.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                lugar_dato.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+
+                mapButton.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+                linkButton.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+                break;
+            }
+            case 1:{
+                layout.setBackgroundResource(R.color.medium_background);
+                myToolbar.setBackgroundResource(R.color.medium_primary);
+                scroll.setBackgroundResource(R.color.medium_background);
+
+                title.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                activityType.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                fechaIni.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                fechaIni_dato.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                fechaFin.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                fechaFin_dato.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                periocidad.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                lugar.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                lugar_dato.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+
+                mapButton.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+                linkButton.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+                break;
+
+            }
+            case 2:{
+                layout.setBackgroundResource(R.color.dark_background);
+                myToolbar.setBackgroundResource(R.color.dark_primary);
+                scroll.setBackgroundResource(R.color.dark_background);
+
+                title.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                activityType.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                fechaIni.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                fechaIni_dato.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                fechaFin.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                fechaFin_dato.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                periocidad.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                lugar.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                lugar_dato.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+
+                mapButton.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+                linkButton.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+                break;
+
+            }
+
+
+
+        }
+
+
+
+    }
+
 
 
     @Override
