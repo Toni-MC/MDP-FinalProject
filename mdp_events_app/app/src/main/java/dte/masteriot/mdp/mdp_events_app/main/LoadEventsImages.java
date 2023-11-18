@@ -31,8 +31,6 @@ public class LoadEventsImages implements Runnable {
     Handler creator;
     private Dataset dataset;
 
-
-
     public LoadEventsImages(Handler handler, Dataset data) {
         // The constructor accepts 3 arguments:
         // The handler to the creator of this object
@@ -49,12 +47,6 @@ public class LoadEventsImages implements Runnable {
         Message msg;
         Bundle msg_data;
 
-//        Dictionary<String, String> dic_default_images = new Hashtable<>();
-//        dic_default_images.put("deporte", "https://www.madrid.es/UnidadesDescentralizadas/Educacion_Ambiental/EspecialesInformativos/HabitatMadridActividadesAmbientales/Imagenes/Exposiciones/Expo100A%C3%B1osMestaCasaCampo.jpg");
-//        dic_default_images.put("expo_arte", "/Exposiciones,/ActividadesCalleArteUrbano");
-//        dic_default_images.put("musica", "/Musica");
-//        dic_default_images.put("teatro_av", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales" +
-//                "/CircoMagia,/CuentacuentosTiteresMarionetas");
         for (int i = 0; i < dataset.getSize(); i++) {
             Item item = dataset.getItemAtPosition(i);
             string_URL = item.getLink();
@@ -63,9 +55,6 @@ public class LoadEventsImages implements Runnable {
 
             String image_url = get_image_url(html);
 
-            if(image_url == "NA"){
-                image_url = "https://www.madrid.es/UnidadesDescentralizadas/Educacion_Ambiental/EspecialesInformativos/HabitatMadridActividadesAmbientales/Imagenes/Exposiciones/Expo100A%C3%B1osMestaCasaCampo.jpg";
-            }
             item.setImageLink(image_url);
             msg = creator.obtainMessage(); // message to send to the UI thread
             msg_data = msg.getData(); // message data

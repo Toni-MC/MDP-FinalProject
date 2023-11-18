@@ -180,7 +180,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onChanged(Integer n_item) {
                 loadingDialog.onContentChanged();
-                if(n_item >= (max_limit - 3)){
+                if(n_item == (max_limit -1)){
                     loadingDialog.cancel();
                     configure_recyclerview(dataset);
                 }
