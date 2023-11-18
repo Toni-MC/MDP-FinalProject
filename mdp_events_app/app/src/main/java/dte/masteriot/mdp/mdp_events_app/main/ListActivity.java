@@ -113,7 +113,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         date1 = sdf.format(c.getTime());
-        c.add(Calendar.DATE, 7);
+        c.add(Calendar.DATE, 3);
         date2 = sdf.format(c.getTime());
 
         update_events();
@@ -168,18 +168,19 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         dataset = new Dataset(json_str, event_type, date1, date2);
         asyncManager.launchBackgroundTask(dataset);
         LoadingDialog loadingDialog = new LoadingDialog(this);
-
-        int max_limit = dataset.getSize();
-        if(max_limit>40){
-//            max_limit = max_limit/2; //to show the list when the half is loaded
+        int max_limit;
+        if(dataset.getSize() > 50){
+            max_limit = 25;
         }
-        int finalMax_limit = max_limit;
-//        int finalMax_limit = 10;
+        else{
+            max_limit = dataset.getSize();
+        }
+
         Observer progressObserver = new Observer<Integer>(){
             @Override
             public void onChanged(Integer n_item) {
                 loadingDialog.onContentChanged();
-                if(n_item == (finalMax_limit - 1)){
+                if(n_item >= (max_limit - 3)){
                     loadingDialog.cancel();
                     configure_recyclerview(dataset);
                 }
@@ -187,7 +188,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         };
         asyncManager.getProgress().observe(this, progressObserver);
 
-        loadingDialog.onPreparePanel(max_limit, null, null);
+        loadingDialog.onPreparePanel(dataset.getSize(), null, null);
         loadingDialog.show();
 
     }

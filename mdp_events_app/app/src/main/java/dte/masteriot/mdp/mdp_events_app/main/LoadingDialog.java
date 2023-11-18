@@ -56,7 +56,7 @@ public class LoadingDialog extends Dialog {
     public boolean onPreparePanel(int featureId, @Nullable View view, @NonNull Menu menu) {
         max = featureId;
         progressBar = findViewById(R.id.progressBar);
-        progressBar.setMax(10);
+        progressBar.setMax(max);
         String msg = featureId + " events found";
         Toast.makeText(global_context, msg, Toast.LENGTH_LONG).show();
 
