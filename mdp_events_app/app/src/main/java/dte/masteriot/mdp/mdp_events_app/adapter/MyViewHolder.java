@@ -30,7 +30,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         // formats the title's text color depending on the "isSelected" argument.
         title.setText(item.getTitle());
         image.setAdjustViewBounds(true);
-        Picasso.get().load(item.getImageLink()).resize(100,100).into(image);
+        Picasso.get().load(item.getImageLink()).resize(130,130).into(image);
 
         if(isSelected) {
             title.setTextColor(Color.BLUE);
