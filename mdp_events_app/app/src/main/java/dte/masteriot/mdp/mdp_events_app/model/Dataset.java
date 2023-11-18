@@ -17,7 +17,11 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -30,11 +34,15 @@ public class Dataset {
     private static final String TAG = "TAGListOfItems, Dataset";
     private List<Item> listofitems;
     private String event_type;
+    private String date1;
+    private String date2;
 
-    public Dataset(String json, String event_type) {
+    public Dataset(String json, String event_type, String date1, String date2) {
         Log.d(TAG, "Dataset() called");
         listofitems = new ArrayList<>();
         this.event_type = event_type;
+        this.date1 = date1;
+        this.date2 = date2;
         construct_event_list(json);
     }
 
@@ -42,9 +50,11 @@ public class Dataset {
 
         List<String> list = new ArrayList<String>();
 
-        String title, description, price, dtstart, dtend, time, link, event_location;
+        String title, description, price, dtstart, dtend, recurrence, time, link, event_location;
         int is_free, id;
         LatLng latlng;
+
+        boolean match_type, match_date;
 
         try {
             JSONObject json_obj;
@@ -62,6 +72,14 @@ public class Dataset {
                 price = userDetail.getString("price");
                 dtstart = userDetail.getString("dtstart");
                 dtend = userDetail.getString("dtend");
+                match_date = get_match_date(dtstart, dtend);
+                if(userDetail.has("recurrence")){
+                    JSONObject rec = userDetail.getJSONObject("recurrence");
+                    recurrence = rec.getString("days");
+                }
+                else{
+                    recurrence = "NA";
+                }
                 time = userDetail.getString("time");
                 link = userDetail.getString("link");
                 event_location = userDetail.getString("event-location");
@@ -74,7 +92,6 @@ public class Dataset {
                 }
                 id = Integer.valueOf(userDetail.getInt("id"));
 
-
                 String type;
                 if(userDetail.has("@type")){
                     type = userDetail.getString("@type");
@@ -82,13 +99,11 @@ public class Dataset {
                 else{
                     type = "NA";
                 }
-                boolean match = get_match_type(type);
-                if((event_type == "all") || match){
+                match_type = get_match_type(type);
+                if(((event_type == "all") || match_type) && (match_date)){
                     listofitems.add(new Item(title, description, this.event_type, is_free, price,
-                            dtstart, dtend, time, link, event_location, latlng, (long) id));
+                            dtstart, dtend, recurrence, time, link, event_location, latlng, (long) id));
                 }
-
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -117,6 +132,30 @@ public class Dataset {
         return match;
     }
 
+    public boolean get_match_date(String dtstart, String dtend) {
+        boolean match = true;
+        String aux_day;
+
+        dtstart = dtstart.substring(0,10);
+        dtend = dtend.substring(0,10);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            Date strStartDate = sdf.parse(dtstart);
+            Date strEndDate = sdf.parse(dtend);
+            Date today = sdf.parse(date1);
+            Date last_day = sdf.parse(date2);
+
+            if (strStartDate.after(last_day) || strEndDate.before(today)) {
+                match = false;
+            }
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return match;
+    }
+
     public int getSize() {
         return listofitems.size();
     }
@@ -131,7 +170,7 @@ public class Dataset {
 
     public int getPositionOfKey(Long searchedkey) {
         // Look for the position of the Item with key = searchedkey.
-        int position = listofitems.indexOf(new Item("placeholder", "placeholder", "placeholder", 0, null, null, null, null, null, null, null, searchedkey));
+        int position = listofitems.indexOf(new Item("placeholder", "placeholder", "placeholder", 0, null, null, null, null, null, null, null, null, searchedkey));
         return position;
     }
 

@@ -13,49 +13,58 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="15dp"
-        app:layout_constraintBottom_toTopOf="@id/layout_buttons"
+        app:layout_constraintBottom_toTopOf="@+id/selectdate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/seeselectionbutton"
+        android:id="@+id/selectdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="See current selection"
+        android:text="Select day range"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/RadioButt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="selectDate"
+        />
+
+    <RadioGroup
+        android:id="@+id/RadioButt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="seeCurrentSelection"
-        />
+        >
 
-    <LinearLayout
-        android:id="@+id/layout_buttons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/seeselectionbutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/update"
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/bt7"
+            android:text="Next 7 days"
             android:layout_weight="1"
-            android:text="List"
-            android:layout_margin="5dp"/>
-
-        <Button
-            android:id="@+id/grid"
+            android:onClick="next7days"
+            android:checked="true"/>
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/bt14"
+            android:text="Next 14 days"
             android:layout_weight="1"
-            android:onClick="gridLayout"
-            android:text="Grid"
-            android:layout_margin="5dp"/>
-    </LinearLayout>
+            android:onClick="next14days"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt30"
+            android:text="Next 30 days"
+            android:layout_weight="1"
+            android:onClick="next30days"/>
+    </RadioGroup>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

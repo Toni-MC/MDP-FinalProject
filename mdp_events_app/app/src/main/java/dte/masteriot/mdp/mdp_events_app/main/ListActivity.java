@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.selection.ItemKeyProvider;
@@ -30,7 +31,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -62,6 +70,9 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor lightSensor;
 
+    String date1;
+    String date2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +96,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
                 super.handleMessage(msg);
                 if((string_result = msg.getData().getString("text")) != null) {
                     json_str = string_result;
-                    update_dataset(json_str);
+                    update_dataset();
                 }
             }
         };
@@ -97,6 +108,13 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
         // Create an executor for the background tasks:
         es = Executors.newSingleThreadExecutor();
+
+        //Default 7 days
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        date1 = sdf.format(c.getTime());
+        c.add(Calendar.DATE, 7);
+        date2 = sdf.format(c.getTime());
 
         update_events();
     }
@@ -114,13 +132,6 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         // Execute the loading task in background:
         LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, URL_JSON);
         es.execute(loadURLContents);
-    }
-
-    public void set_item_images() {
-
-        // Execute the loading task in background:
-        LoadEventsImages loadEventsImages = new LoadEventsImages(handler, dataset);
-        es.execute(loadEventsImages);
     }
 
     public void gridLayout(View view) {
@@ -151,19 +162,19 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         startActivity(i);
     }
 
-    void update_dataset(String json){
+    void update_dataset(){
         Intent imputIntent = getIntent();
         String event_type = imputIntent.getStringExtra("event_type");
-        dataset = new Dataset(json, event_type);
-//        set_item_images();
+        dataset = new Dataset(json_str, event_type, date1, date2);
         asyncManager.launchBackgroundTask(dataset);
         LoadingDialog loadingDialog = new LoadingDialog(this);
 
         int max_limit = dataset.getSize();
         if(max_limit>40){
-            max_limit = max_limit/2; //to show the list when the half is loaded
+//            max_limit = max_limit/2; //to show the list when the half is loaded
         }
         int finalMax_limit = max_limit;
+//        int finalMax_limit = 10;
         Observer progressObserver = new Observer<Integer>(){
             @Override
             public void onChanged(Integer n_item) {
@@ -176,7 +187,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         };
         asyncManager.getProgress().observe(this, progressObserver);
 
-        loadingDialog.onPreparePanel(finalMax_limit, null, null);
+        loadingDialog.onPreparePanel(max_limit, null, null);
         loadingDialog.show();
 
     }
@@ -243,6 +254,51 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    public void next7days(View view){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        date1 = sdf.format(c.getTime());
+        c.add(Calendar.DATE, 7);
+        date2 = sdf.format(c.getTime());
+        update_dataset();
+    }
+
+    public void next14days(View view){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        date1 = sdf.format(c.getTime());
+        c.add(Calendar.DATE, 14);
+        date2 = sdf.format(c.getTime());
+        update_dataset();
+    }
+
+    public void next30days(View view){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        date1 = sdf.format(c.getTime());
+        c.add(Calendar.DATE, 30);
+        date2 = sdf.format(c.getTime());
+        update_dataset();
+    }
+
+    public void selectDate(View view){
+        MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(new Pair<>(
+                MaterialDatePicker.thisMonthInUtcMilliseconds(),
+                MaterialDatePicker.todayInUtcMilliseconds()
+        )).build();
+
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
+            @Override
+            public void onPositiveButtonClick(Pair<Long, Long> selection) {
+                date1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(selection.first));
+                date2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(selection.second));
+                update_dataset();
+            }
+        });
+
+        materialDatePicker.show(getSupportFragmentManager(), "tag");
+    }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         // In this app we do nothing if sensor's accuracy changes
@@ -253,26 +309,26 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         ConstraintLayout layout = findViewById(R.id.FirstActLayout);
         RecyclerView recycler = findViewById(R.id.recyclerView);
 
-        Button seeselectionbutton = findViewById(R.id.seeselectionbutton);
-        Button update = findViewById(R.id.update);
-        Button grid = findViewById(R.id.grid);
+//        Button seeselectionbutton = findViewById(R.id.seeselectionbutton);
+//        Button update = findViewById(R.id.update);
+//        Button grid = findViewById(R.id.grid);
         //recyclerViewAdapter.notifyDataSetChanged();
 
         switch (style){
             case 0:{
                 layout.setBackgroundResource(R.color.light_background);
                 recycler.setBackgroundResource(R.color.light_background);
-                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
-                update.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
-                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+//                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+//                update.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+//                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
                 break;
             }
             case 1:{
                 layout.setBackgroundResource(R.color.medium_background);
                 recycler.setBackgroundResource(R.color.medium_background);
-                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
-                update.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
-                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+//                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+//                update.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+//                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
                 break;
 
             }
@@ -280,9 +336,9 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
                 layout.setBackgroundResource(R.color.dark_background);
                 recycler.setBackgroundResource(R.color.dark_background);
-                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
-                update.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
-                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+//                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+//                update.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+//                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
                 break;
 
             }

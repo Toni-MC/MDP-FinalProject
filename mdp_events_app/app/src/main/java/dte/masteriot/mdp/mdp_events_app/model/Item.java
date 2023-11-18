@@ -13,6 +13,7 @@ public class Item {
     private String price;
     private String dtstart;
     private String dtend;
+    private String recurrence;
     private String time;
     private String link;
     private String image_link;
@@ -23,7 +24,7 @@ public class Item {
 
 
     Item(String title, String description, String type, int is_free,
-         String price, String dtstart, String dtend,
+         String price, String dtstart, String dtend, String recurrence,
          String time, String link, String event_location , LatLng latlng, Long key) {
 
         this.title = title;
@@ -33,6 +34,7 @@ public class Item {
         this.price = price;
         this.dtstart = dtstart;
         this.dtend = dtend;
+        this.recurrence = recurrence;
         this.time = time;
         this.link = link;
         this.event_location = event_location;
