@@ -6,4 +6,34 @@
     </style>
 
     <style name="Theme.Mdp_events_app" parent="Base.Theme.Mdp_events_app" />
+
+
+
+
+    <style name="Theme.AppThemeMain" parent="Base.Theme.Mdp_events_app">
+        <item name="colorPrimary">@color/light_primary</item>
+        <item name="android:colorBackground">@color/light_background</item>
+        <item name="android:textColor">@color/light_text</item>
+
+    </style>
+
+    <!-- Secondary theme -->
+    <style name="Theme.AppThemeSecondary" parent="Base.Theme.Mdp_events_app">
+        <item name="colorPrimary">@color/medium_primary</item>
+        <item name="android:colorBackground">@color/medium_background</item>
+        <item name="android:textColor">@color/medium_text</item>
+    </style>
+
+    <!-- Tertiary theme -->
+    <style name="Theme.AppThemeTertiary" parent="Base.Theme.Mdp_events_app">
+        <item name="colorPrimary">@color/dark_primary</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="android:textColor">@color/dark_text</item>
+        <item name="android:textColorPrimary">@color/dark_text</item>
+        <item name="android:textColorSecondary">@color/dark_text</item>
+
+    </style>
+
+
+
 </resources>

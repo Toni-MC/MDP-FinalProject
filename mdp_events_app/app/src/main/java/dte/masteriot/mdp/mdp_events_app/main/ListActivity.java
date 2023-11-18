@@ -14,14 +14,13 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.selection.ItemKeyProvider;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
@@ -31,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -58,7 +58,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     AsyncManager asyncManager;
     SharedPreferences sharedPref;
     String sharedPref_key = "lightLevelListAct";
-
+    private Boolean firstMeasure;
     private SensorManager sensorManager;
     private Sensor lightSensor;
 
@@ -68,11 +68,9 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_list);
 
         sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
-
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        //CHECK IF DYNAMIC CONFIGURATION IS ON
-        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        setUpStyle();
 
         asyncManager = new ViewModelProvider(this).get(AsyncManager.class);
 
@@ -208,6 +206,40 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     }
 
 
+    public void setUpStyle(){
+
+        SharedPreferences configPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(configPref.contains("static_theme")){
+            Boolean selected = configPref.getBoolean("static_theme", false);
+            String value = configPref.getString("static_theme_selected", null);
+
+            if(selected){
+                sensorManager.unregisterListener(this, lightSensor);
+                //static
+                if(Objects.equals(value, "light")){
+                    changeStyle(0);
+                }else if(Objects.equals(value, "medium")){
+                    changeStyle(1);
+                }else if(Objects.equals(value, "dark")){
+                    changeStyle(2);
+                }
+            }else{
+                //dynamic
+                sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+                firstMeasure = true;
+            }
+
+
+        }else {
+            sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            firstMeasure = true;
+        }
+
+
+    }
+
+
     // Methods related to the SensorEventListener interface:
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -220,25 +252,26 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
             float value = sensorEvent.values[0];
             Log.d("value", "level: " + Float.toString(level));
             Log.d("value", Float.toString(value));
-            if(value < 5 && level != 2){
+            if(value < 5 && (level != 2 || firstMeasure)){
                 changeStyle(2);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 2);
                 editor.apply();
-            }else if (value > 150 && level !=0){
+            }else if (value > 150 && (level != 0 || firstMeasure)){
                 changeStyle(0);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 0);
                 editor.apply();
-            }else if (value < 150 && value > 5 && level != 1){
+            }else if (value < 150 && value > 5 && (level != 1 || firstMeasure)){
                 changeStyle(1);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 1);
                 editor.apply();
             }
+            firstMeasure = false;
         }
 
     }
@@ -287,6 +320,14 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
             }
         }
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        setUpStyle();
     }
 
 
