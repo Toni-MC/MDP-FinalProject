@@ -92,6 +92,9 @@ public class Item {
     public String getImageLink(){
         return image_link;
     }
+    public String getType(){
+        return type;
+    }
 
 
     // We override the "equals" operator to only compare keys

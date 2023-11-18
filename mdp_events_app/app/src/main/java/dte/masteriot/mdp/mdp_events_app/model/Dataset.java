@@ -113,10 +113,10 @@ public class Dataset {
 
     public boolean get_match_type(String type){
         Dictionary<String, String> dic = new Hashtable<>();
-        dic.put("deporte", "/ActividadesDeportivas");
-        dic.put("expo_arte", "/Exposiciones,/ActividadesCalleArteUrbano");
-        dic.put("musica", "/Musica");
-        dic.put("teatro_av", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales" +
+        dic.put("sport", "/ActividadesDeportivas");
+        dic.put("art", "/Exposiciones,/ActividadesCalleArteUrbano");
+        dic.put("music", "/Musica");
+        dic.put("theater", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales" +
                 "/CircoMagia,/CuentacuentosTiteresMarionetas");
 
         boolean match = false;
