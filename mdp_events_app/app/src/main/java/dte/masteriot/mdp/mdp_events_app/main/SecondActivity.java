@@ -1,10 +1,8 @@
 package dte.masteriot.mdp.mdp_events_app.main;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +24,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,11 +33,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
-
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
+
 import dte.masteriot.mdp.mdp_events_app.R;
 
 import dte.masteriot.mdp.mdp_events_app.roomDB.AppDatabase;
@@ -52,7 +50,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private SensorManager sensorManager;
     private Sensor lightSensor;
-
+    private Boolean firstMeasure;
     SharedPreferences sharedPref;
     String sharedPref_key = "lightLevelSecondAct";
 
@@ -76,11 +74,9 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_second);
 
         sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
-
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        //CHECK IF DYNAMIC CONFIGURATION IS ON
-        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -88,6 +84,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(""); //No title
+        myToolbar.setNavigationIcon(R.drawable.back_arrow);
 
         Intent intent = getIntent();
 
@@ -202,6 +199,8 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
             }
         });
 
+
+        setUpStyle();
     }
 
 
@@ -243,6 +242,39 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
 
     }
 
+    public void setUpStyle(){
+
+        SharedPreferences configPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(configPref.contains("static_theme")){
+            Boolean selected = configPref.getBoolean("static_theme", false);
+            String value = configPref.getString("static_theme_selected", null);
+
+            if(selected){
+                sensorManager.unregisterListener(this, lightSensor);
+                //static
+                if(Objects.equals(value, "light")){
+                    changeStyle(0);
+                }else if(Objects.equals(value, "medium")){
+                    changeStyle(1);
+                }else if(Objects.equals(value, "dark")){
+                    changeStyle(2);
+                }
+            }else{
+                //dynamic
+                sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+                firstMeasure = true;
+            }
+
+
+        }else {
+            sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            firstMeasure = true;
+        }
+
+
+    }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         int type = sensorEvent.sensor.getType();
@@ -253,25 +285,26 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         if(type == Sensor.TYPE_LIGHT){
             float value = sensorEvent.values[0];
             Log.d("value", Float.toString(value));
-            if(value < 5 && level != 2){
+            if(value < 5 && (level != 2 || firstMeasure)){
                 changeStyle(2);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 2);
                 editor.apply();
-            }else if (value > 150 && level !=0){
+            }else if (value > 150 && (level != 0 || firstMeasure)){
                 changeStyle(0);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 0);
                 editor.apply();
-            }else if (value < 150 && value > 5 && level != 1){
+            }else if (value < 150 && value > 5 && (level != 1 || firstMeasure)){
                 changeStyle(1);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 1);
                 editor.apply();
             }
+            firstMeasure = false;
         }
 
     }
@@ -280,6 +313,8 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     public void onAccuracyChanged(Sensor sensor, int i) {
         // In this app we do nothing if sensor's accuracy changes
     }
+
+
 
 
     private void changeStyle(int style){
@@ -388,6 +423,13 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        setUpStyle();
     }
 
 }

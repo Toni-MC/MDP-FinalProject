@@ -44,6 +44,7 @@ dependencies {
     implementation ("org.jsoup:jsoup:1.16.2")
 
     implementation ("androidx.room:room-runtime:2.5.0")
+    implementation("androidx.preference:preference:1.2.0")
     annotationProcessor("androidx.room:room-compiler:2.5.0")
 
     testImplementation("junit:junit:4.13.2")

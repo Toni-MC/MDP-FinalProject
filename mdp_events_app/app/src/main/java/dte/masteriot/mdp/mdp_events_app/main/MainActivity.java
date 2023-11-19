@@ -3,36 +3,34 @@ package dte.masteriot.mdp.mdp_events_app.main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-
-import androidx.annotation.NonNull;
+import android.widget.Toast;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.Iterator;
-import java.util.concurrent.Executors;
-
+import androidx.preference.PreferenceManager;
+import java.util.Objects;
 import dte.masteriot.mdp.mdp_events_app.R;
-import dte.masteriot.mdp.mdp_events_app.model.Dataset;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
     private Sensor lightSensor;
+    private Boolean firstMeasure;
     SharedPreferences sharedPref;
     String sharedPref_key = "lightLevelMainAct";
 
@@ -41,12 +39,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
 
-        sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
 
+        sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        //CHECK IF DYNAMIC CONFIGURATION IS ON
-        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(myToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(""); //No title
+
+        setUpStyle();
+
+
+
+
 
     }
 
@@ -75,6 +83,40 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
 
+    public void setUpStyle(){
+
+        SharedPreferences configPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(configPref.contains("static_theme")){
+            Boolean selected = configPref.getBoolean("static_theme", false);
+            String value = configPref.getString("static_theme_selected", null);
+
+            if(selected){
+                sensorManager.unregisterListener(this, lightSensor);
+                //static
+                if(Objects.equals(value, "light")){
+                    changeStyle(0);
+                }else if(Objects.equals(value, "medium")){
+                    changeStyle(1);
+                }else if(Objects.equals(value, "dark")){
+                    changeStyle(2);
+                }
+            }else{
+                //dynamic
+                sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+                firstMeasure = true;
+            }
+
+
+        }else {
+            sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            firstMeasure = true;
+        }
+
+
+    }
+
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         int type = sensorEvent.sensor.getType();
@@ -85,25 +127,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(type == Sensor.TYPE_LIGHT){
             float value = sensorEvent.values[0];
             Log.d("value", Float.toString(value));
-            if(value < 5 && level != 2){
+            if(value < 5 && (level != 2 || firstMeasure)){
                 changeStyle(2);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 2);
                 editor.apply();
-            }else if (value > 150 && level !=0){
+            }else if (value > 150 && (level != 0 || firstMeasure)){
                 changeStyle(0);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 0);
                 editor.apply();
-            }else if (value < 150 && value > 5 && level != 1){
+            }else if (value < 150 && value > 5 && (level != 1 || firstMeasure)){
                 changeStyle(1);
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(sharedPref_key, 1);
                 editor.apply();
             }
+            firstMeasure = false;
         }
 
     }
@@ -115,25 +158,77 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private void changeStyle(int style){
         LinearLayout layout = findViewById(R.id.mainActLayout);
-        //recyclerViewAdapter.notifyDataSetChanged();
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
 
         switch (style){
             case 0:{
                 layout.setBackgroundResource(R.color.light_background);
+                myToolbar.setBackgroundResource(R.color.light_primary);
+
                 break;
             }
             case 1:{
                 layout.setBackgroundResource(R.color.medium_background);
+                myToolbar.setBackgroundResource(R.color.medium_primary);
+
+
                 break;
 
             }
             case 2:{
 
                 layout.setBackgroundResource(R.color.dark_background);
+                myToolbar.setBackgroundResource(R.color.dark_primary);
+
+
+
+
                 break;
 
             }
         }
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            menuItem.getIcon().setColorFilter(ContextCompat.getColor(this, R.color.dark_text), PorterDuff.Mode.SRC_IN);
+
+        }
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if(itemId == R.id.messages){
+            Toast.makeText(this, "MESSAGES CLICKED", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if(itemId == R.id.settings){
+            Intent i = new Intent(MainActivity.this , SettingsActivity.class);
+            startActivity(i);
+            return true;
+        }else{
+            return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        setUpStyle();
     }
 
 

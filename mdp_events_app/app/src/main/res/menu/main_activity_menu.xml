@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- sample_menu.xml -->
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/messages"
+        android:icon="@drawable/messages_icon"
+        android:iconTint="@color/white"
+        android:title="Messages"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/settings_icon"
+        android:iconTintMode="@color/white"
+        android:title="Settings"
+        app:showAsAction="ifRoom"/>
+
+</menu>

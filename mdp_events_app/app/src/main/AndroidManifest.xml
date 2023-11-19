@@ -6,16 +6,20 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Mdp_events_app"
+        android:theme="@style/Theme.AppThemeMain"
         tools:targetApi="31">
+        <activity
+            android:name=".main.SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -32,10 +36,10 @@
         </activity>
         <activity
             android:name=".main.SecondActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".main.ListActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>
