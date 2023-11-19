@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(""); //No title
+        actionBar.setTitle("MeetMadrid"); //No title
+        myToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         setUpStyle();
 
@@ -170,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             case 0:{
                 layout.setBackgroundResource(R.color.light_background);
                 myToolbar.setBackgroundResource(R.color.light_primary);
+
                 bSport.setBackgroundColor(ContextCompat.getColor(this, R.color.sport_color));
                 bMusic.setBackgroundColor(ContextCompat.getColor(this, R.color.music_color));
                 bArt.setBackgroundColor(ContextCompat.getColor(this, R.color.art_color));
@@ -180,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             case 1:{
                 layout.setBackgroundResource(R.color.medium_background);
                 myToolbar.setBackgroundResource(R.color.medium_primary);
+
                 bSport.setBackgroundColor(ContextCompat.getColor(this, R.color.sport_color));
                 bMusic.setBackgroundColor(ContextCompat.getColor(this, R.color.music_color));
                 bArt.setBackgroundColor(ContextCompat.getColor(this, R.color.art_color));
@@ -192,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 layout.setBackgroundResource(R.color.dark_background);
                 myToolbar.setBackgroundResource(R.color.dark_primary);
+
                 bSport.setBackgroundColor(ContextCompat.getColor(this, R.color.sport_color_dark));
                 bMusic.setBackgroundColor(ContextCompat.getColor(this, R.color.music_color_dark));
                 bArt.setBackgroundColor(ContextCompat.getColor(this, R.color.art_color_dark));

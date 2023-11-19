@@ -62,6 +62,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     String title;
     String description;
     String entireType;
+    String type;
     int is_free;
     String price;
     String dtstart;
@@ -108,6 +109,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         periocity = intent.getStringExtra("periocity");
         imageLink = intent.getStringExtra("imageLink");
         entireType = intent.getStringExtra("entireType");
+        type = intent.getStringExtra("type");
 
         Log.d("Intent", title + " - " + is_free + " - " + price + " - " + dtstart + " - " + dtend + " - " + time + " - " + link + " - " + event_location + " - " + latlng + " - " +periocity);
 
@@ -238,10 +240,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
             Picasso.get().load(imageLink).into(picture);
 
         }else{
-            //SET DEFAULT IMAGE PER EVENT TYPE
-            ImageView picture = findViewById(R.id.picture);
-            picture.setAdjustViewBounds(true);
-            Picasso.get().load("https://www.madrid.es/UnidadesDescentralizadas/DistritoMoratalaz/Actividades/2023/octubre/exposicion345.jpg").into(picture);
+            findViewById(R.id.picture).setVisibility(View.GONE);
 
         }
     }

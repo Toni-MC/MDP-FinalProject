@@ -63,6 +63,7 @@ public class MyOnItemActivatedListener implements OnItemActivatedListener<Long> 
         i.putExtra("periocity", dataset.getItemAtPosition(itemdetails.getPosition()).getRecurrence());
         i.putExtra("imageLink", dataset.getItemAtPosition(itemdetails.getPosition()).getImage_link());
         i.putExtra("entireType", dataset.getItemAtPosition(itemdetails.getPosition()).getEntireType());
+        i.putExtra("type", dataset.getItemAtPosition(itemdetails.getPosition()).getType());
 
 
 

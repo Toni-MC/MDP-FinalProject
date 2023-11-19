@@ -30,14 +30,14 @@
     <color name="grey">#676767</color>
     <color name="dark_grey">#474747</color>
 
-    <color name="sport_color">#E87052</color>
-    <color name="music_color">#9CBC51</color>
+    <color name="sport_color">#E85752</color>
+    <color name="music_color">#ABD646</color>
     <color name="art_color">#B37FED</color>
     <color name="theater_color">#4CBDB4</color>
 
-    <color name="sport_color_dark">#7E452B</color>
-    <color name="music_color_dark">#1E4714</color>
-    <color name="art_color_dark">#594075</color>
+    <color name="sport_color_dark">#5E2020</color>
+    <color name="music_color_dark">#3A5C13</color>
+    <color name="art_color_dark">#5B176A</color>
     <color name="theater_color_dark">#437873</color>
 
 
