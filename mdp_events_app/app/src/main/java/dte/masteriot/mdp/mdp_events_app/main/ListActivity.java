@@ -73,6 +73,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     private Boolean firstMeasure;
     private SensorManager sensorManager;
     private Sensor lightSensor;
+    int currentTheme = 0;
 
     String date1;
     String date2;
@@ -321,10 +322,24 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void selectDate(View view){
-        MaterialDatePicker<Pair<Long, Long>> materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setSelection(new Pair<>(
+
+
+        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
+
+
+        if(currentTheme == 0){
+            builder.setTheme(R.style.MaterialCalendarLight);
+        }else if(currentTheme == 1){
+            builder.setTheme(R.style.MaterialCalendarMedium);
+        }else if(currentTheme == 2){
+            builder.setTheme(R.style.MaterialCalendarDark);
+        }
+
+        MaterialDatePicker<Pair<Long, Long>> materialDatePicker = builder.setSelection(new Pair<>(
                 MaterialDatePicker.thisMonthInUtcMilliseconds(),
                 MaterialDatePicker.todayInUtcMilliseconds()
         )).build();
+
 
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
             @Override
@@ -351,13 +366,11 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         RadioButton bt7 = findViewById(R.id.bt7);
         RadioButton bt14 = findViewById(R.id.bt14);
         RadioButton bt30 = findViewById(R.id.bt30);
-//        Button seeselectionbutton = findViewById(R.id.seeselectionbutton);
-//        Button update = findViewById(R.id.update);
-//        Button grid = findViewById(R.id.grid);
         //recyclerViewAdapter.notifyDataSetChanged();
 
         switch (style){
             case 0:{
+                currentTheme = 0;
                 layout.setBackgroundResource(R.color.light_background);
                 recycler.setBackgroundResource(R.color.light_background);
                 selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
@@ -370,6 +383,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
                 break;
             }
             case 1:{
+                currentTheme = 1;
                 layout.setBackgroundResource(R.color.medium_background);
                 recycler.setBackgroundResource(R.color.medium_background);
                 selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
@@ -383,7 +397,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
             }
             case 2:{
-
+                currentTheme = 2;
                 layout.setBackgroundResource(R.color.dark_background);
                 recycler.setBackgroundResource(R.color.dark_background);
                 selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
