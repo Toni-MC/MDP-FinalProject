@@ -41,7 +41,11 @@ public class SettingsActivity extends AppCompatActivity {
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Settings"); //No title
+        myToolbar.setTitleTextColor(getResources().getColor(R.color.dark_text));
 
+        // Set the text color for the subtitle (if applicable)
+        myToolbar.setSubtitleTextColor(getResources().getColor(R.color.dark_text));
+        myToolbar.setNavigationIcon(R.drawable.back_arrow);
 
     }
 

@@ -84,6 +84,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(""); //No title
+        myToolbar.setNavigationIcon(R.drawable.back_arrow);
 
         Intent intent = getIntent();
 

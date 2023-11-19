@@ -14,6 +14,7 @@
         <item name="colorPrimary">@color/light_primary</item>
         <item name="android:colorBackground">@color/light_background</item>
         <item name="android:textColor">@color/light_text</item>
+        <item name="alertDialogTheme">@style/AlertDialogLight</item>
 
     </style>
 
@@ -22,17 +23,60 @@
         <item name="colorPrimary">@color/medium_primary</item>
         <item name="android:colorBackground">@color/medium_background</item>
         <item name="android:textColor">@color/medium_text</item>
+        <item name="alertDialogTheme">@style/AlertDialogLight</item>
     </style>
 
     <!-- Tertiary theme -->
     <style name="Theme.AppThemeTertiary" parent="Base.Theme.Mdp_events_app">
         <item name="colorPrimary">@color/dark_primary</item>
+        <item name="colorControlActivated">@color/medium_primary</item>
         <item name="android:colorBackground">@color/dark_background</item>
         <item name="android:textColor">@color/dark_text</item>
         <item name="android:textColorPrimary">@color/dark_text</item>
         <item name="android:textColorSecondary">@color/dark_text</item>
+        <item name="alertDialogTheme">@style/AlertDialogDark</item>
+
 
     </style>
+
+
+
+    <style name="AlertDialogDark" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/dark_primary</item>
+        <item name="android:textColorPrimary">@color/dark_text</item>
+        <item name="android:textColorSecondary">@color/dark_text</item>
+        <item name="android:textColorTertiary">@color/dark_text</item>
+        <item name="android:textColor">@color/light_text</item>
+        <item name="android:background">#989898</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Alert.Button.Neutral</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>
+
+    </style>
+
+
+    <style name="AlertDialogLight" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/medium_primary</item>
+        <item name="android:textColorPrimary">@color/light_text</item>
+        <item name="android:textColorSecondary">@color/light_text</item>
+        <item name="android:textColor">@color/light_text</item>
+        <item name="android:background">#FFFFFF</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Alert.Button.Neutral</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>
+    </style>
+
+
+
+    <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Alert.Button.Neutral" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
 
 
 
