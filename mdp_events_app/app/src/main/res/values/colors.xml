@@ -27,5 +27,8 @@
     <color name="medium_recycler">#FF000000</color>
     <color name="light_recycler">#343638</color>
 
+    <color name="grey">#676767</color>
+    <color name="dark_grey">#474747</color>
+
 
 </resources>

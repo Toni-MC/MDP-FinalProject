@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -345,7 +347,10 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     private void changeStyle(int style){
         ConstraintLayout layout = findViewById(R.id.FirstActLayout);
         RecyclerView recycler = findViewById(R.id.recyclerView);
-
+        Button selectdate = findViewById(R.id.selectdate);
+        RadioButton bt7 = findViewById(R.id.bt7);
+        RadioButton bt14 = findViewById(R.id.bt14);
+        RadioButton bt30 = findViewById(R.id.bt30);
 //        Button seeselectionbutton = findViewById(R.id.seeselectionbutton);
 //        Button update = findViewById(R.id.update);
 //        Button grid = findViewById(R.id.grid);
@@ -355,17 +360,25 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
             case 0:{
                 layout.setBackgroundResource(R.color.light_background);
                 recycler.setBackgroundResource(R.color.light_background);
-//                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
-//                update.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
-//                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+                selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+                bt7.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                bt14.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                bt30.setTextColor(ContextCompat.getColor(this, R.color.light_text));
+                bt7.setButtonTintList(ContextCompat.getColorStateList(this, R.color.radio_button_color_light));
+                bt14.setButtonTintList(ContextCompat.getColorStateList(this, R.color.radio_button_color_light));
+                bt30.setButtonTintList(ContextCompat.getColorStateList(this, R.color.radio_button_color_light));
                 break;
             }
             case 1:{
                 layout.setBackgroundResource(R.color.medium_background);
                 recycler.setBackgroundResource(R.color.medium_background);
-//                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
-//                update.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
-//                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+                selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+                bt7.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                bt14.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                bt30.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
+                bt7.setButtonTintList(ContextCompat.getColorStateList(this, R.color.radio_button_color_medium));
+                bt14.setButtonTintList(ContextCompat.getColorStateList(this, R.color.radio_button_color_medium));
+                bt30.setButtonTintList(ContextCompat.getColorStateList(this, R.color.radio_button_color_medium));
                 break;
 
             }
@@ -373,9 +386,14 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
                 layout.setBackgroundResource(R.color.dark_background);
                 recycler.setBackgroundResource(R.color.dark_background);
-//                seeselectionbutton.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
-//                update.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
-//                grid.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+                selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+                bt7.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                bt14.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                bt30.setTextColor(ContextCompat.getColor(this, R.color.dark_text));
+                bt7.setButtonTintList(ContextCompat.getColorStateList(this, R.color.radio_button_color_dark));
+                bt14.setButtonTintList(ContextCompat.getColorStateList(this, R.color.radio_button_color_dark));
+                bt30.setButtonTintList(ContextCompat.getColorStateList(this, R.color.radio_button_color_dark));
+
                 break;
 
             }
