@@ -69,7 +69,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     String link;
     String event_location;
     LatLng latlng;
-
+    String imageLink;
     String periocity;
     List<String> periocity_list;
 
@@ -105,6 +105,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         event_location = intent.getStringExtra("event_location");
         latlng = new LatLng(intent.getDoubleExtra("latitude", 0), intent.getDoubleExtra("longitude", 0));
         periocity = intent.getStringExtra("periocity");
+        imageLink = intent.getStringExtra("imageLink");
 
         Log.d("Intent", title + " - " + is_free + " - " + price + " - " + dtstart + " - " + dtend + " - " + time + " - " + link + " - " + event_location + " - " + latlng + " - " +periocity);
 
@@ -157,10 +158,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         showMap();
 
         //Set imgage
-        ImageView picture = findViewById(R.id.picture);
-        picture.setAdjustViewBounds(true);
-        Picasso.get().load("https://www.madrid.es/UnidadesDescentralizadas/DistritoMoratalaz/Actividades/2023/octubre/exposicion345.jpg").into(picture);
-
+        setImage();
 
 
         Button linkButton = findViewById(R.id.linkButton);
@@ -221,6 +219,22 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
 
+    private void setImage(){
+        //Set imgage
+
+        if(!Objects.equals(imageLink, "NA")){
+            ImageView picture = findViewById(R.id.picture);
+            picture.setAdjustViewBounds(true);
+            Picasso.get().load(imageLink).into(picture);
+
+        }else{
+            //SET DEFAULT IMAGE PER EVENT TYPE
+            ImageView picture = findViewById(R.id.picture);
+            picture.setAdjustViewBounds(true);
+            Picasso.get().load("https://www.madrid.es/UnidadesDescentralizadas/DistritoMoratalaz/Actividades/2023/octubre/exposicion345.jpg").into(picture);
+
+        }
+    }
 
 
     private void setPeriocity(){
