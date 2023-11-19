@@ -49,18 +49,20 @@ public class LoadEventsImages implements Runnable {
 
         for (int i = 0; i < dataset.getSize(); i++) {
             Item item = dataset.getItemAtPosition(i);
-            string_URL = item.getLink();
-            string_URL = string_URL.replace("http", "https");
-            String html = get_html();
+            String sslink = item.getImageLink();
+            if(sslink == "NA"){
+                string_URL = item.getLink();
+                string_URL = string_URL.replace("http", "https");
+                String html = get_html();
 
-            String image_url = get_image_url(html);
+                String image_url = get_image_url(html);
 
-            item.setImageLink(image_url);
+                item.setImageLink(image_url);
+            }
             msg = creator.obtainMessage(); // message to send to the UI thread
             msg_data = msg.getData(); // message data
             msg_data.putInt("progress", i); // (key, value = progress)
             msg.sendToTarget(); // send the message to the target
-
         }
     }
 
@@ -131,7 +133,7 @@ public class LoadEventsImages implements Runnable {
             str_im = str_im.substring(0, str_im.length() - 2);
         }
         else{
-            str_im =  "NA";
+            str_im =  "Default";
         }
         return str_im;
     }

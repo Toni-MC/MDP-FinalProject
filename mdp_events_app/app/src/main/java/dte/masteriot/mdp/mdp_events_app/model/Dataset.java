@@ -33,25 +33,21 @@ public class Dataset {
     // This dataset is a list of Items
     private static final String TAG = "TAGListOfItems, Dataset";
     private List<Item> listofitems;
-    private String event_type;
-    private String date1;
-    private String date2;
+    public String event_type;
+    public String date1;
+    public String date2;
+    private List<Long> id_list = new ArrayList<>();
 
-    public Dataset(String json, String event_type, String date1, String date2) {
+    public Dataset() {
         Log.d(TAG, "Dataset() called");
-        listofitems = new ArrayList<>();
-        this.event_type = event_type;
-        this.date1 = date1;
-        this.date2 = date2;
-        construct_event_list(json);
+        this.listofitems = new ArrayList<>();
     }
 
-    void construct_event_list(String json_str){
-
-        List<String> list = new ArrayList<String>();
+    public void construct_event_list(String json_str){
 
         String title, description, price, dtstart, dtend, recurrence, time, link, event_location;
-        int is_free, id;
+        int is_free;
+        Long id;
         LatLng latlng;
 
         boolean match_type, match_date;
@@ -66,32 +62,8 @@ public class Dataset {
             for (int i = 0; i < length; i++) {
                 // create a JSONObject for fetching single user data
                 JSONObject userDetail = json_array.getJSONObject(i);
-                title = userDetail.getString("title");
-                description = userDetail.getString("description");
-                is_free = userDetail.getInt("free");
-                price = userDetail.getString("price");
                 dtstart = userDetail.getString("dtstart");
                 dtend = userDetail.getString("dtend");
-                match_date = get_match_date(dtstart, dtend);
-                if(userDetail.has("recurrence")){
-                    JSONObject rec = userDetail.getJSONObject("recurrence");
-                    recurrence = rec.getString("days");
-                }
-                else{
-                    recurrence = "NA";
-                }
-                time = userDetail.getString("time");
-                link = userDetail.getString("link");
-                event_location = userDetail.getString("event-location");
-                if(userDetail.has("location")){
-                    JSONObject location = userDetail.getJSONObject("location");
-                    latlng = new LatLng(location.getDouble("latitude"), location.getDouble("longitude"));
-                }
-                else{
-                    latlng = new LatLng(0, 0);
-                }
-                id = Integer.valueOf(userDetail.getInt("id"));
-
                 String type;
                 if(userDetail.has("@type")){
                     type = userDetail.getString("@type");
@@ -99,17 +71,56 @@ public class Dataset {
                 else{
                     type = "NA";
                 }
-                match_type = get_match_type(type);
-                if(((event_type == "all") || match_type) && (match_date)){
-                    listofitems.add(new Item(title, description, this.event_type, type, is_free, price,
-                            dtstart, dtend, recurrence, time, link, event_location, latlng, (long) id));
+                id = Long.valueOf(userDetail.getInt("id"));
+                boolean flag;
+                flag = id_list.contains(id);
+                if(flag) {
+                    match_date = get_match_date(dtstart, dtend);
+                    match_type = get_match_type(type);
+                    if((match_type == false) || (match_date == false)){
+                        int index = id_list.indexOf(id);
+                        removeItemAtPosition(index);
+                        id_list.remove(id);
+                    }
+                }
+                else{
+                    title = userDetail.getString("title");
+                    description = userDetail.getString("description");
+                    is_free = userDetail.getInt("free");
+                    price = userDetail.getString("price");
+
+                    match_date = get_match_date(dtstart, dtend);
+                    if(userDetail.has("recurrence")){
+                        JSONObject rec = userDetail.getJSONObject("recurrence");
+                        recurrence = rec.getString("days");
+                    }
+                    else{
+                        recurrence = "NA";
+                    }
+                    time = userDetail.getString("time");
+                    link = userDetail.getString("link");
+                    event_location = userDetail.getString("event-location");
+                    if(userDetail.has("location")){
+                        JSONObject location = userDetail.getJSONObject("location");
+                        latlng = new LatLng(location.getDouble("latitude"), location.getDouble("longitude"));
+                    }
+                    else {
+                        latlng = new LatLng(0, 0);
+                    }
+
+                    match_type = get_match_type(type);
+                    if(((event_type == "all") || match_type) && (match_date)){
+                        listofitems.add(new Item(title, description, this.event_type, type, is_free, price,
+                                dtstart, dtend, recurrence, time, link, event_location, latlng, id));
+                        id_list.add(id);
+                    }
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
+
 
     public boolean get_match_type(String type){
         Dictionary<String, String> dic = new Hashtable<>();

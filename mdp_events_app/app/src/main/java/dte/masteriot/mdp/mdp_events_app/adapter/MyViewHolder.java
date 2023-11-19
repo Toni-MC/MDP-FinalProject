@@ -30,7 +30,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         // formats the title's text color depending on the "isSelected" argument.
         title.setText(item.getTitle());
         image.setAdjustViewBounds(true);
-        if(item.getImageLink() == "NA"){
+        if(item.getImageLink() == "Default"){
             switch (item.getType()){
                 case "sport":
                     Picasso.get().load(R.drawable.sport).resize(130,130).into(image);

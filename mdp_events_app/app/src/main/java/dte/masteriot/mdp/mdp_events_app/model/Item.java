@@ -39,6 +39,7 @@ public class Item {
         this.recurrence = recurrence;
         this.time = time;
         this.link = link;
+        this.image_link = "NA";
         this.event_location = event_location;
         this.latlng = latlng;
         this.key = key;
