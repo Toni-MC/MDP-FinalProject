@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
@@ -160,17 +161,29 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         LinearLayout layout = findViewById(R.id.mainActLayout);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
 
+        Button bSport = findViewById(R.id.bSport);
+        Button bMusic = findViewById(R.id.bMusic);
+        Button bArt = findViewById(R.id.bArt);
+        Button bTeather = findViewById(R.id.bTeather);
+
         switch (style){
             case 0:{
                 layout.setBackgroundResource(R.color.light_background);
                 myToolbar.setBackgroundResource(R.color.light_primary);
+                bSport.setBackgroundColor(ContextCompat.getColor(this, R.color.sport_color));
+                bMusic.setBackgroundColor(ContextCompat.getColor(this, R.color.music_color));
+                bArt.setBackgroundColor(ContextCompat.getColor(this, R.color.art_color));
+                bTeather.setBackgroundColor(ContextCompat.getColor(this, R.color.theater_color));
 
                 break;
             }
             case 1:{
                 layout.setBackgroundResource(R.color.medium_background);
                 myToolbar.setBackgroundResource(R.color.medium_primary);
-
+                bSport.setBackgroundColor(ContextCompat.getColor(this, R.color.sport_color));
+                bMusic.setBackgroundColor(ContextCompat.getColor(this, R.color.music_color));
+                bArt.setBackgroundColor(ContextCompat.getColor(this, R.color.art_color));
+                bTeather.setBackgroundColor(ContextCompat.getColor(this, R.color.theater_color));
 
                 break;
 
@@ -179,7 +192,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 layout.setBackgroundResource(R.color.dark_background);
                 myToolbar.setBackgroundResource(R.color.dark_primary);
-
+                bSport.setBackgroundColor(ContextCompat.getColor(this, R.color.sport_color_dark));
+                bMusic.setBackgroundColor(ContextCompat.getColor(this, R.color.music_color_dark));
+                bArt.setBackgroundColor(ContextCompat.getColor(this, R.color.art_color_dark));
+                bTeather.setBackgroundColor(ContextCompat.getColor(this, R.color.theater_color_dark));
 
 
 

@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:gravity="center"
     tools:context=".main.MainActivity"
     android:id="@+id/mainActLayout">
 
@@ -18,53 +17,69 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+
+
+    <Button
         android:id="@+id/bSport"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
         android:text="Sport"
-        android:layout_weight="1"
-        android:autoSizeTextType="uniform"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        app:icon="@drawable/sport_icon"
+        android:backgroundTint="@color/sport_color"
+        app:iconSize="50dp"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:onClick="seeSportList"
         android:padding="5dp"
-        android:layout_margin="25dp"
-        android:textAllCaps="false"
-        android:onClick="seeSportList"/>
+        android:layout_margin="15dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/bMusic"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
         android:text="Music"
-        android:layout_weight="1"
-        android:autoSizeTextType="uniform"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        app:icon="@drawable/microfono_icons"
+        android:backgroundTint="@color/music_color"
+        app:iconSize="50dp"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:onClick="seeMusicList"
         android:padding="5dp"
-        android:layout_margin="25dp"
-        android:textAllCaps="false"
-        android:onClick="seeMusicList"/>
+        android:layout_margin="15dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+
+    <Button
         android:id="@+id/bArt"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
         android:text="Art"
-        android:layout_weight="1"
-        android:autoSizeTextType="uniform"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        app:icon="@drawable/arte_icon"
+        android:backgroundTint="@color/art_color"
+        app:iconSize="50dp"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:onClick="seeArtList"
         android:padding="5dp"
-        android:layout_margin="25dp"
-        android:textAllCaps="false"
-        android:onClick="seeArtList"/>
+        android:layout_margin="15dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/bTeather"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
         android:text="Theater"
-        android:layout_weight="1"
-        android:autoSizeTextType="uniform"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        app:icon="@drawable/teatro_icon"
+        android:backgroundTint="@color/theater_color"
+        app:iconSize="50dp"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:onClick="seeTeatherList"
         android:padding="5dp"
-        android:layout_margin="25dp"
-        android:textAllCaps="false"
-        android:onClick="seeTeatherList"/>
+        android:layout_margin="15dp"/>
+
 
 
 </LinearLayout>
