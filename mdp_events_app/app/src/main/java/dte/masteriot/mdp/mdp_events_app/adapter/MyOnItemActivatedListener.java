@@ -60,6 +60,7 @@ public class MyOnItemActivatedListener implements OnItemActivatedListener<Long> 
         i.putExtra("latitude", dataset.getItemAtPosition(itemdetails.getPosition()).getLatlng().latitude);
         i.putExtra("longitude", dataset.getItemAtPosition(itemdetails.getPosition()).getLatlng().longitude);
         i.putExtra("id", dataset.getItemAtPosition(itemdetails.getPosition()).getKey());
+        i.putExtra("periocity", dataset.getItemAtPosition(itemdetails.getPosition()).getRecurrence());
 
 
 

@@ -35,7 +35,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import dte.masteriot.mdp.mdp_events_app.R;
@@ -68,6 +70,9 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     String event_location;
     LatLng latlng;
 
+    String periocity;
+    List<String> periocity_list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,8 +104,9 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         link = intent.getStringExtra("link");
         event_location = intent.getStringExtra("event_location");
         latlng = new LatLng(intent.getDoubleExtra("latitude", 0), intent.getDoubleExtra("longitude", 0));
+        periocity = intent.getStringExtra("periocity");
 
-        Log.d("Intent", title + " - " + is_free + " - " + price + " - " + dtstart + " - " + dtend + " - " + time + " - " + link + " - " + event_location);
+        Log.d("Intent", title + " - " + is_free + " - " + price + " - " + dtstart + " - " + dtend + " - " + time + " - " + link + " - " + event_location + " - " + latlng + " - " +periocity);
 
 
 
@@ -128,14 +134,24 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
 
         // FALTA periocity
         //TO SET PEROCITY
-        TextView t = findViewById(R.id.circulo_sabado);
-        t.setBackgroundResource(R.drawable.circle_diselected);
-        t = findViewById(R.id.circulo_domingo);
-        t.setBackgroundResource(R.drawable.circle_diselected);
+        if(!Objects.equals(periocity, "") & periocity != null & !Objects.equals(periocity, "NA")){
+            periocity_list = Arrays.asList(periocity.split(","));
+            setPeriocity();
+        }else{
+            findViewById(R.id.periocidad).setVisibility(View.GONE);
+            findViewById(R.id.periocidad_icons).setVisibility(View.GONE);
+            periocity_list = null;
+        }
+
 
         //Location
         TextView location = findViewById(R.id.lugar_dato);
-        location.setText(event_location);
+        if(!Objects.equals(event_location, "") & event_location != null){
+            location.setText(event_location);
+        }else{
+            findViewById(R.id.lugar_dato).setVisibility(View.GONE);
+        }
+
 
         //Deploy map fragment
         showMap();
@@ -204,6 +220,58 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
 
+
+
+
+    private void setPeriocity(){
+
+        for (String item : periocity_list) {
+            switch (item){
+                case "MO":{
+                    TextView t = findViewById(R.id.circulo_lunes);
+                    t.setBackgroundResource(R.drawable.circle_selected);
+
+                    break;
+                }
+                case "TU":{
+                    TextView t = findViewById(R.id.circulo_martes);
+                    t.setBackgroundResource(R.drawable.circle_selected);
+                    break;
+                }
+                case "WE":{
+                    TextView t = findViewById(R.id.circulo_miercoles);
+                    t.setBackgroundResource(R.drawable.circle_selected);
+                    break;
+                }
+                case "TH":{
+                    TextView t = findViewById(R.id.circulo_jueves);
+                    t.setBackgroundResource(R.drawable.circle_selected);
+                    break;
+                }
+                case "FR":{
+                    TextView t = findViewById(R.id.circulo_viernes);
+                    t.setBackgroundResource(R.drawable.circle_selected);
+                    break;
+                }
+                case "SA":{
+                    TextView t = findViewById(R.id.circulo_sabado);
+                    t.setBackgroundResource(R.drawable.circle_selected);
+                    break;
+                }
+                case "SU":{
+                    TextView t = findViewById(R.id.circulo_domingo);
+                    t.setBackgroundResource(R.drawable.circle_selected);
+                    break;
+                }
+
+
+
+            }
+        }
+
+    }
+
+
     private String setDates(String dateTimeStart, String dateTimeEnd){
 
         SimpleDateFormat receiveFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -236,9 +304,18 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void showMap(){
-        SupportMapFragment supportMapFragment = (SupportMapFragment)
-                getSupportFragmentManager().findFragmentById(R.id.activity_map);
-        supportMapFragment.getMapAsync(this);
+
+        if((latlng.longitude == 0.0) & (latlng.latitude == 0.0)){
+            findViewById(R.id.lugar).setVisibility(View.GONE);
+            findViewById(R.id.lugar_dato).setVisibility(View.GONE);
+            findViewById(R.id.activity_map).setVisibility(View.GONE);
+            findViewById(R.id.mapButton).setVisibility(View.GONE);
+        }else{
+            SupportMapFragment supportMapFragment = (SupportMapFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.activity_map);
+            supportMapFragment.getMapAsync(this);
+        }
+
 
     }
 

@@ -96,6 +96,13 @@ public class Item {
         return type;
     }
 
+    public String getRecurrence() {
+        return recurrence;
+    }
+
+    public String getImage_link() {
+        return image_link;
+    }
 
     // We override the "equals" operator to only compare keys
     // (useful when searching for the position of a specific key in a list of Items):
