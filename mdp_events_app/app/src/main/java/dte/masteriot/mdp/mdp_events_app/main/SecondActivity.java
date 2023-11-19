@@ -61,6 +61,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     long id;
     String title;
     String description;
+    String entireType;
     int is_free;
     String price;
     String dtstart;
@@ -106,6 +107,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         latlng = new LatLng(intent.getDoubleExtra("latitude", 0), intent.getDoubleExtra("longitude", 0));
         periocity = intent.getStringExtra("periocity");
         imageLink = intent.getStringExtra("imageLink");
+        entireType = intent.getStringExtra("entireType");
 
         Log.d("Intent", title + " - " + is_free + " - " + price + " - " + dtstart + " - " + dtend + " - " + time + " - " + link + " - " + event_location + " - " + latlng + " - " +periocity);
 
@@ -129,6 +131,8 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
         //Title
         TextView titleTv = findViewById(R.id.titleEvent);
         titleTv.setText(title);
+
+        setType();
 
         //Dates
         setDates(dtstart, dtend);
@@ -218,6 +222,12 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
 
+    private void setType(){
+        List<String> type_list = Arrays.asList(entireType.split("/"));
+        String type = type_list.get(type_list.size() - 1);
+        TextView tv = findViewById(R.id.activityType);
+        tv.setText(type);
+    }
 
     private void setImage(){
         //Set imgage

@@ -101,7 +101,7 @@ public class Dataset {
                 }
                 match_type = get_match_type(type);
                 if(((event_type == "all") || match_type) && (match_date)){
-                    listofitems.add(new Item(title, description, this.event_type, is_free, price,
+                    listofitems.add(new Item(title, description, this.event_type, type, is_free, price,
                             dtstart, dtend, recurrence, time, link, event_location, latlng, (long) id));
                 }
             }
@@ -170,7 +170,7 @@ public class Dataset {
 
     public int getPositionOfKey(Long searchedkey) {
         // Look for the position of the Item with key = searchedkey.
-        int position = listofitems.indexOf(new Item("placeholder", "placeholder", "placeholder", 0, null, null, null, null, null, null, null, null, searchedkey));
+        int position = listofitems.indexOf(new Item("placeholder", "placeholder", "placeholder", "placeholder",0, null, null, null, null, null, null, null, null, searchedkey));
         return position;
     }
 

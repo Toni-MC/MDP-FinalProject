@@ -9,6 +9,7 @@ public class Item {
     private String description;
 
     private String type;
+    private String entireType;
     private int is_free;
     private String price;
     private String dtstart;
@@ -23,13 +24,14 @@ public class Item {
     private Long key;
 
 
-    Item(String title, String description, String type, int is_free,
+    Item(String title, String description, String type, String entireType, int is_free,
          String price, String dtstart, String dtend, String recurrence,
          String time, String link, String event_location , LatLng latlng, Long key) {
 
         this.title = title;
         this.description = description;
         this.type = type;
+        this.entireType = entireType;
         this.is_free = is_free;
         this.price = price;
         this.dtstart = dtstart;
@@ -98,6 +100,10 @@ public class Item {
 
     public String getRecurrence() {
         return recurrence;
+    }
+
+    public String getEntireType() {
+        return entireType;
     }
 
     public String getImage_link() {
