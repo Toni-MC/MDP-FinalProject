@@ -17,12 +17,14 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     // Holds references to individual item views
     TextView title;
     ImageView image;
+    TextView is_free;
     private static final String TAG = "TAGListOfItems, MyViewHolder";
 
     public MyViewHolder(View itemView) {
         super(itemView);
         title = itemView.findViewById(R.id.title);
         image = itemView.findViewById(R.id.image_view);
+        is_free = itemView.findViewById(R.id.is_free);
     }
 
     void bindValues(Item item, Boolean isSelected) {
@@ -30,7 +32,16 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         // formats the title's text color depending on the "isSelected" argument.
         title.setText(item.getTitle());
         image.setAdjustViewBounds(true);
-        if(item.getImageLink() == "NA"){
+        if(item.getIs_free() == 1){
+            is_free.setText("Free");
+            is_free.setTextColor(Color.parseColor("#047A08"));
+        }
+        else {
+            is_free.setText(item.getPrice());
+            is_free.setTextColor(Color.parseColor("#CB6F07"));
+        }
+
+        if(item.getImageLink() == "Default"){
             switch (item.getType()){
                 case "sport":
                     Picasso.get().load(R.drawable.sport_icon).resize(130,130).into(image);

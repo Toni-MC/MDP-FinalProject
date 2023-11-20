@@ -60,12 +60,14 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
     private static final String URL_JSON = "https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json";
     private static final String  CONTENT_TYPE_JSON = "application/json";
-
     private RecyclerView recyclerView;
+
+    private MyAdapter recyclerViewAdapter;
     private SelectionTracker<Long> tracker;
+    private LoadingDialog loadingDialog;
     String json_str;
     ExecutorService es;
-    private Dataset dataset;
+    private Dataset dataset = new Dataset();
     Handler handler;
     AsyncManager asyncManager;
     SharedPreferences sharedPref;
@@ -74,7 +76,6 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor lightSensor;
     int currentTheme = 0;
-
     String date1;
     String date2;
 
@@ -117,7 +118,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         date1 = sdf.format(c.getTime());
-        c.add(Calendar.DATE, 3);
+        c.add(Calendar.DATE, 7);
         date2 = sdf.format(c.getTime());
 
         update_events();
@@ -136,6 +137,9 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         // Execute the loading task in background:
         LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, URL_JSON);
         es.execute(loadURLContents);
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
+
     }
 
     public void gridLayout(View view) {
@@ -143,50 +147,35 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
     }
 
-    public void seeCurrentSelection(View view) {
-        // Button "see current selection" has been clicked:
-
-        Iterator<Long> iteratorSelectedItemsKeys = tracker.getSelection().iterator();
-        // This iterator allows to navigate through the keys of the currently selected items.
-        // Complete info on getSelection():
-        // https://developer.android.com/reference/androidx/recyclerview/selection/SelectionTracker#getSelection()
-        // Complete info on class Selection (getSelection() returns an object of this class):
-        // https://developer.android.com/reference/androidx/recyclerview/selection/Selection
-
-        String text = "";
-        while (iteratorSelectedItemsKeys.hasNext()) {
-            text += iteratorSelectedItemsKeys.next().toString();
-            if (iteratorSelectedItemsKeys.hasNext()) {
-                text += ", ";
-            }
-        }
-        text = "Keys of currently selected items = \n" + text;
-        Intent i = new Intent(this, SecondActivity.class);
-        i.putExtra("text", text);
-        startActivity(i);
-    }
-
     void update_dataset(){
         Intent imputIntent = getIntent();
         String event_type = imputIntent.getStringExtra("event_type");
-        dataset = new Dataset(json_str, event_type, date1, date2);
+        dataset.date1 = date1;
+        dataset.date2 = date2;
+        dataset.event_type = event_type;
+        dataset.construct_event_list(json_str);
+
         asyncManager.launchBackgroundTask(dataset);
-        LoadingDialog loadingDialog = new LoadingDialog(this);
+
         int max_limit;
-        if(dataset.getSize() > 50){
-            max_limit = 25;
+        if(dataset.getSize() > 30){
+            max_limit = 15;
         }
         else{
             max_limit = dataset.getSize();
         }
-
         Observer progressObserver = new Observer<Integer>(){
             @Override
             public void onChanged(Integer n_item) {
                 loadingDialog.onContentChanged();
-                if(n_item == (max_limit -1)){
-                    loadingDialog.cancel();
+                if(recyclerView == null){
                     configure_recyclerview(dataset);
+                }
+                else {
+                    recyclerViewAdapter.notifyDataSetChanged();
+                }
+                if(n_item == (max_limit -1)){
+                    loadingDialog.hide();
                 }
             }
         };
@@ -200,7 +189,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     public void configure_recyclerview(Dataset dataset){
         // Prepare the RecyclerView:
         recyclerView = findViewById(R.id.recyclerView);
-        MyAdapter recyclerViewAdapter = new MyAdapter(dataset);
+        recyclerViewAdapter = new MyAdapter(dataset);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -221,6 +210,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
                 .withOnItemActivatedListener(onItemActivatedListener)
                 .build();
         recyclerViewAdapter.setSelectionTracker(tracker);
+
     }
 
 

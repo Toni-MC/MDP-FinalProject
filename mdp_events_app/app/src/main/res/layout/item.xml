@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:orientation="horizontal">
 
@@ -19,7 +19,8 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="3dp">
+            android:layout_marginLeft="3dp"
+            android:layout_marginBottom="10dp">
         </ImageView>
 
         <LinearLayout
@@ -35,6 +36,19 @@
                 android:layout_height="wrap_content"
                 android:singleLine="false"
                 android:text="Placeholder for title" />
+
+            <TextView
+                android:id="@+id/is_free"
+                style="@style/Base.TextAppearance.AppCompat.Headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="8dp"
+                android:text="Placeholder for is_free"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
 
         </LinearLayout>
 
