@@ -158,8 +158,8 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         asyncManager.launchBackgroundTask(dataset);
 
         int max_limit;
-        if(dataset.getSize() > 50){
-            max_limit = 30;
+        if(dataset.getSize() > 30){
+            max_limit = 15;
         }
         else{
             max_limit = dataset.getSize();
@@ -168,14 +168,14 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onChanged(Integer n_item) {
                 loadingDialog.onContentChanged();
+                if(recyclerView == null){
+                    configure_recyclerview(dataset);
+                }
+                else {
+                    recyclerViewAdapter.notifyDataSetChanged();
+                }
                 if(n_item == (max_limit -1)){
                     loadingDialog.hide();
-                    if(recyclerView == null){
-                        configure_recyclerview(dataset);
-                    }
-                    else {
-                        recyclerViewAdapter.notifyDataSetChanged();
-                    }
                 }
             }
         };
