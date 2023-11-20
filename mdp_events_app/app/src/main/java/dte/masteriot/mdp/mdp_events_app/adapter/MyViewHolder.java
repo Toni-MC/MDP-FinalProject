@@ -34,6 +34,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         image.setAdjustViewBounds(true);
         if(item.getIs_free() == 1){
             is_free.setText("Free");
+            is_free.setTextColor(Color.GREEN);
         }
         else {
             is_free.setText(item.getPrice());
