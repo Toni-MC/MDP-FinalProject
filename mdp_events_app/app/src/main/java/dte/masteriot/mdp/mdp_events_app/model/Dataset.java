@@ -181,7 +181,7 @@ public class Dataset {
 
     public int getPositionOfKey(Long searchedkey) {
         // Look for the position of the Item with key = searchedkey.
-        int position = listofitems.indexOf(new Item("placeholder", "placeholder", "placeholder", "placeholder",0, null, null, null, null, null, null, null, null, searchedkey));
+        int position = listofitems.indexOf(new Item("placeholder", "placeholder", "placeholder", "placeholder",0, "placeholder", "placeholder", "placeholder", "placeholder", "placeholder", "placeholder", "placeholder", null, searchedkey));
         return position;
     }
 
