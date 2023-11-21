@@ -230,7 +230,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         int itemId = item.getItemId();
 
         if(itemId == R.id.messages){
-            Toast.makeText(this, "MESSAGES CLICKED", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "MESSAGES trying to open", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MainActivity.this, FavouritesListMQTT.class);
+            startActivity(i);
             return true;
         }else if(itemId == R.id.settings){
             Intent i = new Intent(MainActivity.this , SettingsActivity.class);

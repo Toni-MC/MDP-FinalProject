@@ -16,4 +16,8 @@ public class Favourites {
         this.eventName = eventName;
     }
 
+    @Override
+    public String toString() {
+        return eventName;
+    }
 }
