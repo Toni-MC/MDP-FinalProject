@@ -132,7 +132,7 @@ public class Dataset {
         dic.put("courses", "/CursosTalleres,/ConferenciasColoquios");
         dic.put("other", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales," +
                 "/CircoMagia,/CuentacuentosTiteresMarionetas,/ActividadesDeportivas,"+
-                "/Exposiciones,/ActividadesCalleArteUrbano,/Musica");
+                "/Exposiciones,/ActividadesCalleArteUrbano,/Musica,/CursosTalleres,/ConferenciasColoquios");
 
         boolean match = false;
         String[] values = dic.get(this.event_type).split(",");
