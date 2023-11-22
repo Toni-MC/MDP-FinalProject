@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void seeOtherList(View v){
         Intent i = new Intent(MainActivity.this , ListActivity.class);
         i.putExtra("event_type","other");
-        i.putExtra("json_str", json_str);
         startActivity(i);
     }
 
