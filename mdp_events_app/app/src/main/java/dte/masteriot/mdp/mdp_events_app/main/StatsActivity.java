@@ -42,7 +42,7 @@ public class StatsActivity extends AppCompatActivity {
         int art_value = intent.getIntExtra("n_art", 0);
         int theater_value = intent.getIntExtra("n_theater", 0);
         int other_value = intent.getIntExtra("n_other", 0);
-        int cursos_value = intent.getIntExtra("n_cursos", 0);
+        int cursos_value = intent.getIntExtra("n_courses", 0);
 
         TextView tv = findViewById(R.id.stat_sport_value);
         tv.setText(Integer.toString(sport_value));
@@ -66,7 +66,7 @@ public class StatsActivity extends AppCompatActivity {
         Segment s2 = new Segment("Music", music_value);
         Segment s3 = new Segment("Art", art_value);
         Segment s4 = new Segment("Theater", theater_value);
-        Segment s5 = new Segment("Cursos", other_value);
+        Segment s5 = new Segment("Courses", other_value);
         Segment s6 = new Segment("Other", other_value);
 
         // Add segments to the chart

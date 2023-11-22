@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final String URL_JSON = "https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json";
     private static final String  CONTENT_TYPE_JSON = "application/json";
 
-    int n_sport, n_music, n_art, n_theater, n_other, n_cursos;
+    int n_sport, n_music, n_art, n_theater, n_other, n_courses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +98,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(i);
     }
 
+    public void seeCoursesList(View v){
+        Intent i = new Intent(MainActivity.this , ListActivity.class);
+        i.putExtra("event_type","courses");
+        startActivity(i);
+    }
+
     public void seeOtherList(View v){
         Intent i = new Intent(MainActivity.this , ListActivity.class);
         i.putExtra("event_type","other");
+        i.putExtra("json_str", json_str);
         startActivity(i);
     }
 
@@ -115,23 +122,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 if((string_result = msg.getData().getString("text")) != null) {
                     json_str = string_result;
                     compute_statistics(json_str);
+                    show_statistics();
                 }
             }
         };
 
-        es = Executors.newSingleThreadExecutor();
+        if(json_str == null) {
+            es = Executors.newSingleThreadExecutor();
 
-        LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, URL_JSON);
-        es.execute(loadURLContents);
+            LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, URL_JSON);
+            es.execute(loadURLContents);
+        }
+        else{
+            compute_statistics(json_str);
+            show_statistics();
+        }
 
-        Intent i = new Intent(MainActivity.this , StatsActivity.class);
-        i.putExtra("n_sport",n_sport);
-        i.putExtra("n_music",n_music);
-        i.putExtra("n_art",n_art);
-        i.putExtra("n_theater",n_theater);
-        i.putExtra("n_other",n_other);
-        i.putExtra("n_cursos",n_cursos);
-        startActivity(i);
     }
 
     public void compute_statistics(String json_str){
@@ -141,13 +147,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         String[] art = "/Exposiciones,/ActividadesCalleArteUrbano".split(",");
         String music = "/Musica";
         String[] theater = "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales,/CircoMagia,/CuentacuentosTiteresMarionetas".split(",");
-        String[] cursos = "/CursosTalleres,/ConferenciasColoquios".split(",");
+        String[] courses = "/CursosTalleres,/ConferenciasColoquios".split(",");
         n_sport = 0;
         n_music = 0;
         n_art = 0;
         n_theater = 0;
         n_other = 0;
-        n_cursos = 0;
+        n_courses = 0;
 
         try {
             JSONObject json_obj;
@@ -186,9 +192,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                             aux = true;
                         }
                     }
-                    for(int j = 0; j < cursos.length; j++) {
-                        if(type.contains(cursos[j])){
-                            n_cursos++;
+                    for(int j = 0; j < courses.length; j++) {
+                        if(type.contains(courses[j])){
+                            n_courses++;
                             aux = true;
                         }
                     }
@@ -200,7 +206,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        int xx = 0;
+    }
+
+    public void show_statistics(){
+        Intent i = new Intent(MainActivity.this , StatsActivity.class);
+        i.putExtra("n_sport",n_sport);
+        i.putExtra("n_music",n_music);
+        i.putExtra("n_art",n_art);
+        i.putExtra("n_theater",n_theater);
+        i.putExtra("n_other",n_other);
+        i.putExtra("n_courses",n_courses);
+        startActivity(i);
     }
 
 

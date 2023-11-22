@@ -129,6 +129,7 @@ public class Dataset {
         dic.put("music", "/Musica");
         dic.put("theater", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales," +
                 "/CircoMagia,/CuentacuentosTiteresMarionetas");
+        dic.put("courses", "/CursosTalleres,/ConferenciasColoquios");
         dic.put("other", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales," +
                 "/CircoMagia,/CuentacuentosTiteresMarionetas,/ActividadesDeportivas,"+
                 "/Exposiciones,/ActividadesCalleArteUrbano,/Musica");
@@ -204,7 +205,3 @@ public class Dataset {
 
 }
 
-
-
-//text.setText(string_result);
-//                text.setText(links.toString());
