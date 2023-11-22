@@ -122,6 +122,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         date2 = sdf.format(c.getTime());
 
         load_events();
+
     }
 
     @Override
