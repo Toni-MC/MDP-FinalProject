@@ -301,6 +301,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Button bMusic = findViewById(R.id.bMusic);
         Button bArt = findViewById(R.id.bArt);
         Button bTeather = findViewById(R.id.bTeather);
+        Button bCursos = findViewById(R.id.bCursos);
 
         switch (style){
             case 0:{
@@ -311,6 +312,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 bMusic.setBackgroundColor(ContextCompat.getColor(this, R.color.music_color));
                 bArt.setBackgroundColor(ContextCompat.getColor(this, R.color.art_color));
                 bTeather.setBackgroundColor(ContextCompat.getColor(this, R.color.theater_color));
+                bCursos.setBackgroundColor(ContextCompat.getColor(this, R.color.cursos_color));
 
                 break;
             }
@@ -322,6 +324,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 bMusic.setBackgroundColor(ContextCompat.getColor(this, R.color.music_color));
                 bArt.setBackgroundColor(ContextCompat.getColor(this, R.color.art_color));
                 bTeather.setBackgroundColor(ContextCompat.getColor(this, R.color.theater_color));
+                bCursos.setBackgroundColor(ContextCompat.getColor(this, R.color.cursos_color));
 
                 break;
 
@@ -335,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 bMusic.setBackgroundColor(ContextCompat.getColor(this, R.color.music_color_dark));
                 bArt.setBackgroundColor(ContextCompat.getColor(this, R.color.art_color_dark));
                 bTeather.setBackgroundColor(ContextCompat.getColor(this, R.color.theater_color_dark));
-
+                bCursos.setBackgroundColor(ContextCompat.getColor(this, R.color.cursos_color_dark));
 
 
                 break;

@@ -8,6 +8,8 @@
     tools:context=".main.MainActivity"
     android:id="@+id/mainActLayout">
 
+
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
@@ -17,68 +19,114 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/bSport"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:text="Sport"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                app:icon="@drawable/sport_icon"
+                android:backgroundTint="@color/sport_color"
+                app:iconSize="50dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:onClick="seeSportList"
+                android:padding="5dp"
+                android:layout_margin="10dp" />
+
+            <Button
+                android:id="@+id/bMusic"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:text="Music"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                app:icon="@drawable/microfono_icons"
+                android:backgroundTint="@color/music_color"
+                app:iconSize="50dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:onClick="seeMusicList"
+                android:padding="5dp"
+                android:layout_margin="10dp"/>
 
 
-    <Button
-        android:id="@+id/bSport"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:text="Sport"
-        android:textSize="25sp"
-        android:layout_gravity="center"
-        app:icon="@drawable/sport_icon"
-        android:backgroundTint="@color/sport_color"
-        app:iconSize="50dp"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:onClick="seeSportList"
-        android:padding="5dp"
-        android:layout_margin="15dp" />
+            <Button
+                android:id="@+id/bArt"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:text="Art"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                app:icon="@drawable/arte_icon"
+                android:backgroundTint="@color/art_color"
+                app:iconSize="50dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:onClick="seeArtList"
+                android:padding="5dp"
+                android:layout_margin="10dp"/>
 
-    <Button
-        android:id="@+id/bMusic"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:text="Music"
-        android:textSize="25sp"
-        android:layout_gravity="center"
-        app:icon="@drawable/microfono_icons"
-        android:backgroundTint="@color/music_color"
-        app:iconSize="50dp"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:onClick="seeMusicList"
-        android:padding="5dp"
-        android:layout_margin="15dp"/>
+            <Button
+                android:id="@+id/bTeather"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:text="Theater"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                app:icon="@drawable/teatro_icon"
+                android:backgroundTint="@color/theater_color"
+                app:iconSize="50dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:onClick="seeTeatherList"
+                android:padding="5dp"
+                android:layout_margin="10dp"/>
+
+            <Button
+                android:id="@+id/bCursos"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:text="Cursos"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                app:icon="@drawable/curso_icon"
+                android:backgroundTint="@color/cursos_color"
+                app:iconSize="50dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:onClick="seeCoursesList"
+                android:padding="5dp"
+                android:layout_margin="10dp"/>
 
 
-    <Button
-        android:id="@+id/bArt"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:text="Art"
-        android:textSize="25sp"
-        android:layout_gravity="center"
-        app:icon="@drawable/arte_icon"
-        android:backgroundTint="@color/art_color"
-        app:iconSize="50dp"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:onClick="seeArtList"
-        android:padding="5dp"
-        android:layout_margin="15dp"/>
+            <Button
+                android:id="@+id/bOther"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:text="Other"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                app:icon="@drawable/otro_icon"
+                android:backgroundTint="@color/other_color"
+                app:iconSize="50dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:onClick="seeOtherList"
+                android:padding="5dp"
+                android:layout_margin="10dp"/>
 
-    <Button
-        android:id="@+id/bTeather"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:text="Theater"
-        android:textSize="25sp"
-        android:layout_gravity="center"
-        app:icon="@drawable/teatro_icon"
-        android:backgroundTint="@color/theater_color"
-        app:iconSize="50dp"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:onClick="seeTeatherList"
-        android:padding="5dp"
-        android:layout_margin="15dp"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
 
 
 

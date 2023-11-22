@@ -32,13 +32,17 @@
 
     <color name="sport_color">#E85752</color>
     <color name="music_color">#ABD646</color>
-    <color name="art_color">#B37FED</color>
+    <color name="art_color">#9E68DA</color>
     <color name="theater_color">#4CBDB4</color>
+    <color name="cursos_color">#2055DA</color>
+    <color name="other_color">#686868</color>
 
     <color name="sport_color_dark">#5E2020</color>
     <color name="music_color_dark">#3A5C13</color>
     <color name="art_color_dark">#5B176A</color>
     <color name="theater_color_dark">#437873</color>
+    <color name="cursos_color_dark">#183F9F</color>
+    <color name="other_color_dark">#676767</color>
 
 
 </resources>

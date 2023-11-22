@@ -55,8 +55,11 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
                 case "theater":
                     Picasso.get().load(R.drawable.teatro_icon).resize(130,130).into(image);
                     break;
+                case "courses":
+                    Picasso.get().load(R.drawable.curso_icon).resize(130,130).into(image);
+                    break;
                 case "other":
-                    Picasso.get().load(R.drawable.other).resize(130,130).into(image);
+                    Picasso.get().load(R.drawable.otro_icon).resize(130,130).into(image);
                     break;
                 default:
                     break;

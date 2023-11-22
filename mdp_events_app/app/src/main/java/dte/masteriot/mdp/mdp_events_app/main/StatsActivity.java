@@ -82,7 +82,7 @@ public class StatsActivity extends AppCompatActivity {
         SegmentFormatter sf4 = new SegmentFormatter(ContextCompat.getColor(this, R.color.theater_color));
         sf4.getLabelPaint().setTextSize(fontSize);
         sf4.getLabelPaint().setFakeBoldText(true);
-        SegmentFormatter sf5 = new SegmentFormatter(ContextCompat.getColor(this, R.color.medium_primary));
+        SegmentFormatter sf5 = new SegmentFormatter(ContextCompat.getColor(this, R.color.cursos_color_dark));
         sf5.getLabelPaint().setTextSize(fontSize);
         sf5.getLabelPaint().setFakeBoldText(true);
         SegmentFormatter sf6 = new SegmentFormatter(ContextCompat.getColor(this, R.color.grey));
