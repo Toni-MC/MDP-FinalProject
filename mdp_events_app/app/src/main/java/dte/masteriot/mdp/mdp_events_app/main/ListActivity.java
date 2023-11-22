@@ -121,7 +121,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         c.add(Calendar.DATE, 7);
         date2 = sdf.format(c.getTime());
 
-        update_events();
+        load_events();
     }
 
     @Override
@@ -132,7 +132,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
     // ------ Buttons' on-click listeners ------ //
 
-    public void update_events() {
+    public void load_events() {
 
         // Execute the loading task in background:
         LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, URL_JSON);
@@ -174,8 +174,10 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
                 else {
                     recyclerViewAdapter.notifyDataSetChanged();
                 }
-                if(n_item == (max_limit -1)){
-                    loadingDialog.hide();
+                if(n_item >= (max_limit -1)){
+                    if(loadingDialog.isShowing()){
+                        loadingDialog.hide();
+                    }
                 }
             }
         };

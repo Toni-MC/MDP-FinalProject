@@ -9,6 +9,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -19,12 +22,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import dte.masteriot.mdp.mdp_events_app.R;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -34,17 +47,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Boolean firstMeasure;
     SharedPreferences sharedPref;
     String sharedPref_key = "lightLevelMainAct";
+    String json_str;
+    ExecutorService es;
+    Handler handler;
+    private static final String URL_JSON = "https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json";
+    private static final String  CONTENT_TYPE_JSON = "application/json";
+
+    int n_sport, n_music, n_art, n_theater, n_other;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
 
-
         sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
@@ -53,10 +71,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         myToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         setUpStyle();
-
-
-
-
 
     }
 
@@ -82,6 +96,103 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Intent i = new Intent(MainActivity.this , ListActivity.class);
         i.putExtra("event_type","theater");
         startActivity(i);
+    }
+
+    public void seeOtherList(View v){
+        Intent i = new Intent(MainActivity.this , ListActivity.class);
+        i.putExtra("event_type","other");
+        startActivity(i);
+    }
+
+    public void seeStatistics(View v){
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                // message received from background thread: load complete (or failure)
+                String string_result;
+
+                super.handleMessage(msg);
+                if((string_result = msg.getData().getString("text")) != null) {
+                    json_str = string_result;
+                    compute_statistics(json_str);
+                }
+            }
+        };
+
+        es = Executors.newSingleThreadExecutor();
+
+        LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, URL_JSON);
+        es.execute(loadURLContents);
+
+//        Intent i = new Intent(MainActivity.this , ListActivity.class);
+//        i.putExtra("n_sport",n_sport);
+//        i.putExtra("n_music",n_music);
+//        i.putExtra("n_art",n_art);
+//        i.putExtra("n_theater",n_theater);
+//        i.putExtra("n_other",n_other);
+//        startActivity(i);
+    }
+
+    public void compute_statistics(String json_str){
+
+        String type;
+        String sport = "/ActividadesDeportivas";
+        String[] art = "/Exposiciones,/ActividadesCalleArteUrbano".split(",");
+        String music = "/Musica";
+        String[] theater = "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales,/CircoMagia,/CuentacuentosTiteresMarionetas".split(",");
+
+        n_sport = 0;
+        n_music = 0;
+        n_art = 0;
+        n_theater = 0;
+        n_other = 0;
+
+        try {
+            JSONObject json_obj;
+            json_obj = new JSONObject(json_str);
+
+            JSONArray json_array = json_obj.getJSONArray("@graph");
+            int length = json_array.length();
+            for (int i = 0; i < length; i++) {
+                // create a JSONObject for fetching single user data
+                JSONObject userDetail = json_array.getJSONObject(i);
+                if(userDetail.has("@type")){
+                    type = userDetail.getString("@type");
+                }
+                else{
+                    type = "NA";
+                }
+                boolean aux = false;
+                if(type.contains(sport)){
+                    n_sport++;
+                    aux = true;
+                }
+                else if (type.contains(music)){
+                    n_music++;
+                    aux = true;
+                }
+                else{
+                    for(int j = 0; j < art.length; j++) {
+                        if(type.contains(art[j])){
+                            n_art++;
+                            aux = true;
+                        }
+                    }
+                    for(int j = 0; j < theater.length; j++) {
+                        if(type.contains(theater[j])){
+                            n_theater++;
+                            aux = true;
+                        }
+                    }
+                }
+                if(aux == false){
+                    n_other++;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        int xx = 0;
     }
 
 

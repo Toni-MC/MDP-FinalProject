@@ -109,7 +109,7 @@ public class Dataset {
                     }
 
                     match_type = get_match_type(type);
-                    if(((event_type == "all") || match_type) && (match_date)){
+                    if((match_type) && (match_date)){
                         listofitems.add(new Item(title, description, this.event_type, type, is_free, price,
                                 dtstart, dtend, recurrence, time, link, event_location, latlng, id));
                         id_list.add(id);
@@ -127,19 +127,27 @@ public class Dataset {
         dic.put("sport", "/ActividadesDeportivas");
         dic.put("art", "/Exposiciones,/ActividadesCalleArteUrbano");
         dic.put("music", "/Musica");
-        dic.put("theater", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales" +
+        dic.put("theater", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales," +
                 "/CircoMagia,/CuentacuentosTiteresMarionetas");
+        dic.put("other", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales," +
+                "/CircoMagia,/CuentacuentosTiteresMarionetas,/ActividadesDeportivas,"+
+                "/Exposiciones,/ActividadesCalleArteUrbano,/Musica");
 
         boolean match = false;
         String[] values = dic.get(this.event_type).split(",");
 
-        for(int i = 0; i < values.length; i++){
+        for(int i = 0; i < values.length; i++) {
             Pattern pattern = Pattern.compile(values[i]);
             Matcher matcher = pattern.matcher(type);
             if (matcher.find()) {
                 match = true;
             }
         }
+
+        if(this.event_type.equals("other")){
+            match = !match;
+        }
+
         return match;
     }
 
