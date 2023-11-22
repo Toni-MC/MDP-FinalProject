@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final String URL_JSON = "https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json";
     private static final String  CONTENT_TYPE_JSON = "application/json";
 
-    int n_sport, n_music, n_art, n_theater, n_other;
+    int n_sport, n_music, n_art, n_theater, n_other, n_cursos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         i.putExtra("n_art",n_art);
         i.putExtra("n_theater",n_theater);
         i.putExtra("n_other",n_other);
+        i.putExtra("n_cursos",n_cursos);
         startActivity(i);
     }
 
@@ -140,12 +141,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         String[] art = "/Exposiciones,/ActividadesCalleArteUrbano".split(",");
         String music = "/Musica";
         String[] theater = "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales,/CircoMagia,/CuentacuentosTiteresMarionetas".split(",");
-
+        String[] cursos = "/CursosTalleres,/ConferenciasColoquios".split(",");
         n_sport = 0;
         n_music = 0;
         n_art = 0;
         n_theater = 0;
         n_other = 0;
+        n_cursos = 0;
 
         try {
             JSONObject json_obj;
@@ -181,6 +183,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     for(int j = 0; j < theater.length; j++) {
                         if(type.contains(theater[j])){
                             n_theater++;
+                            aux = true;
+                        }
+                    }
+                    for(int j = 0; j < cursos.length; j++) {
+                        if(type.contains(cursos[j])){
+                            n_cursos++;
                             aux = true;
                         }
                     }
