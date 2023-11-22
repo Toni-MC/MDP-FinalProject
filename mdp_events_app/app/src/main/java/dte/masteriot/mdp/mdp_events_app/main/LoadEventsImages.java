@@ -50,7 +50,7 @@ public class LoadEventsImages implements Runnable {
         for (int i = 0; i < dataset.getSize(); i++) {
             Item item = dataset.getItemAtPosition(i);
             String sslink = item.getImageLink();
-            if(sslink == "NA"){
+            if((sslink == "NA") || (i == dataset.getSize() - 1)){
                 string_URL = item.getLink();
                 string_URL = string_URL.replace("http", "https");
                 String html = get_html();
@@ -58,11 +58,12 @@ public class LoadEventsImages implements Runnable {
                 String image_url = get_image_url(html);
 
                 item.setImageLink(image_url);
+
+                msg = creator.obtainMessage(); // message to send to the UI thread
+                msg_data = msg.getData(); // message data
+                msg_data.putInt("progress", i); // (key, value = progress)
+                msg.sendToTarget(); // send the message to the target
             }
-            msg = creator.obtainMessage(); // message to send to the UI thread
-            msg_data = msg.getData(); // message data
-            msg_data.putInt("progress", i); // (key, value = progress)
-            msg.sendToTarget(); // send the message to the target
         }
     }
 
