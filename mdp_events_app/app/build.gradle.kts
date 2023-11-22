@@ -43,6 +43,9 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("org.jsoup:jsoup:1.16.2")
 
+    implementation ("com.androidplot:androidplot-core:1.5.10")
+
+
     implementation ("androidx.room:room-runtime:2.5.0")
     implementation("androidx.preference:preference:1.2.0")
     annotationProcessor("androidx.room:room-compiler:2.5.0")

@@ -35,6 +35,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".main.StatsActivity"
+            android:exported="true" />
+        <activity
             android:name=".main.SecondActivity"
             android:exported="true" />
         <activity

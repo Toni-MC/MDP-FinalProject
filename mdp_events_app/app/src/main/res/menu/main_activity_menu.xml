@@ -5,6 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/stats"
+        android:icon="@drawable/stat_icon"
+        android:iconTintMode="@color/white"
+        android:title="Stats"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/messages"
         android:icon="@drawable/messages_icon"
         android:iconTint="@color/white"
@@ -16,5 +23,6 @@
         android:iconTintMode="@color/white"
         android:title="Settings"
         app:showAsAction="ifRoom"/>
+
 
 </menu>

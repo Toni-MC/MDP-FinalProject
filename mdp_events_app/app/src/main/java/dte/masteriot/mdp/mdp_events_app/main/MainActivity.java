@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(i);
     }
 
-    public void seeStatistics(View v){
+    public void seeStatistics(){
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
@@ -124,13 +124,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         LoadURLContents loadURLContents = new LoadURLContents(handler, CONTENT_TYPE_JSON, URL_JSON);
         es.execute(loadURLContents);
 
-//        Intent i = new Intent(MainActivity.this , ListActivity.class);
-//        i.putExtra("n_sport",n_sport);
-//        i.putExtra("n_music",n_music);
-//        i.putExtra("n_art",n_art);
-//        i.putExtra("n_theater",n_theater);
-//        i.putExtra("n_other",n_other);
-//        startActivity(i);
+        Intent i = new Intent(MainActivity.this , StatsActivity.class);
+        i.putExtra("n_sport",n_sport);
+        i.putExtra("n_music",n_music);
+        i.putExtra("n_art",n_art);
+        i.putExtra("n_theater",n_theater);
+        i.putExtra("n_other",n_other);
+        startActivity(i);
     }
 
     public void compute_statistics(String json_str){
@@ -346,6 +346,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }else if(itemId == R.id.settings){
             Intent i = new Intent(MainActivity.this , SettingsActivity.class);
             startActivity(i);
+            return true;
+        }else if(itemId == R.id.stats){
+            seeStatistics();
             return true;
         }else{
             return super.onOptionsItemSelected(item);
