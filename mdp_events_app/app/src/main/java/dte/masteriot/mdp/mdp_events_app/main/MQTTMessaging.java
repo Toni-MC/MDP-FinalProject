@@ -373,7 +373,7 @@ public class MQTTMessaging extends AppCompatActivity implements SensorEventListe
 
         LinearLayout layout = findViewById(R.id.MQTTLayout);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.mqttToolbar);
-
+        myToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         LinearLayout layout1 = findViewById(R.id.MsgLayout);
         TextView messageToSend = findViewById(R.id.messageToSend);
         FloatingActionButton messageButton = findViewById(R.id.messageButton);

@@ -12,12 +12,15 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
@@ -76,10 +79,22 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     String date1;
     String date2;
 
+    String typeFiltered;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        Intent imputIntent = getIntent();
+        typeFiltered = imputIntent.getStringExtra("event_type");
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.list_toolbar);
+        setSupportActionBar(myToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(typeFiltered);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        myToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        myToolbar.setNavigationIcon(R.drawable.back_arrow);
 
         sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
 
@@ -146,8 +161,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     }
 
     void update_dataset(){
-        Intent imputIntent = getIntent();
-        String event_type = imputIntent.getStringExtra("event_type");
+        String event_type = typeFiltered;
         dataset.date1 = date1;
         dataset.date2 = date2;
         dataset.event_type = event_type;
@@ -404,6 +418,15 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onStart() {

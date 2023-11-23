@@ -136,6 +136,7 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Your favourite events"); //Topic name as title
         toolbar.setNavigationIcon(R.drawable.back_arrow);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
 
         //RecyclerView
