@@ -22,12 +22,21 @@
         android:paddingTop="15dp"
         android:paddingLeft="15dp"
         android:orientation="horizontal"
-        android:background="@color/black">
+        android:background="@color/black"
+        android:gravity="left|center">
+
+        <View android:id="@+id/rectangle_sport"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:background="@color/sport_color"
+            android:visibility="visible"
+            android:layout_marginRight="5dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sport: "
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -37,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="17"
-            android:textSize="27sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -48,15 +57,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
+        android:paddingTop="2dp"
         android:paddingLeft="15dp"
         android:orientation="horizontal"
-        android:background="@color/black">
+        android:background="@color/black"
+        android:gravity="left|center">
+
+        <View android:id="@+id/rectanglemusic"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:background="@color/music_color"
+            android:visibility="visible"
+            android:layout_marginRight="5dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Music: "
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -66,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="39"
-            android:textSize="27sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -75,15 +93,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
+        android:paddingTop="2dp"
         android:paddingLeft="15dp"
         android:orientation="horizontal"
-        android:background="@color/black">
+        android:background="@color/black"
+        android:gravity="left|center">
+
+        <View android:id="@+id/rectangle_art"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:background="@color/art_color"
+            android:visibility="visible"
+            android:layout_marginRight="5dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Art: "
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -93,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="70"
-            android:textSize="27sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -103,15 +130,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
+        android:paddingTop="2dp"
         android:paddingLeft="15dp"
         android:orientation="horizontal"
-        android:background="@color/black">
+        android:background="@color/black"
+        android:gravity="left|center">
+
+        <View android:id="@+id/rectangle_theater"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:background="@color/theater_color"
+            android:visibility="visible"
+            android:layout_marginRight="5dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Theater: "
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -121,7 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="98"
-            android:textSize="27sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -131,15 +167,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
+        android:paddingTop="2dp"
         android:paddingLeft="15dp"
         android:orientation="horizontal"
-        android:background="@color/black">
+        android:background="@color/black"
+        android:gravity="left|center">
+
+        <View android:id="@+id/rectangle_cursos"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:background="@color/cursos_color"
+            android:visibility="visible"
+            android:layout_marginRight="5dp"/>
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cursos: "
-            android:textSize="24sp"
+            android:text="Workshop: "
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -149,7 +195,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="98"
-            android:textSize="27sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -159,15 +205,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
+        android:paddingTop="2dp"
         android:paddingLeft="15dp"
         android:orientation="horizontal"
-        android:background="@color/black">
+        android:background="@color/black"
+        android:gravity="left|center">
+
+        <View android:id="@+id/rectangle_other"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:background="@color/other_color"
+            android:visibility="visible"
+            android:layout_marginRight="5dp"/>
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Other: "
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>
@@ -177,7 +233,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="17"
-            android:textSize="27sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/black"/>

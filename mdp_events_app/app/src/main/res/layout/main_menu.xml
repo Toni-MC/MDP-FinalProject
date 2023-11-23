@@ -94,7 +94,7 @@
                 android:id="@+id/bCursos"
                 android:layout_width="300dp"
                 android:layout_height="75dp"
-                android:text="Cursos"
+                android:text="Workshop"
                 android:textSize="25sp"
                 android:layout_gravity="center"
                 app:icon="@drawable/curso_icon"
