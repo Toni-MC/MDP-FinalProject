@@ -14,9 +14,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +38,6 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
@@ -353,7 +350,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
 
     private void changeStyle(int style){
-        ConstraintLayout layout = findViewById(R.id.FirstActLayout);
+        ConstraintLayout layout = findViewById(R.id.favActLayout);
         RecyclerView recycler = findViewById(R.id.recyclerView);
         Button selectdate = findViewById(R.id.selectdate);
         RadioButton bt7 = findViewById(R.id.bt7);

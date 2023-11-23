@@ -3,8 +3,9 @@
     <PreferenceCategory app:title="User">
 
         <EditTextPreference
+            app:defaultValue="Anon"
             app:key="user_name"
-            app:title="Your user name"
+            app:title="Your username"
             app:useSimpleSummaryProvider="true" />
 
 
