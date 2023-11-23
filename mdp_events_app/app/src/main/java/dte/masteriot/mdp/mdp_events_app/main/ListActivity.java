@@ -170,7 +170,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         asyncManager.launchBackgroundTask(dataset);
 
         int max_limit;
-        if(dataset.getSize() > 30){
+        if(dataset.getSize() > 20){
             max_limit = 15;
         }
         else{
