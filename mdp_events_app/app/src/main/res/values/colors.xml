@@ -44,5 +44,7 @@
     <color name="cursos_color_dark">#183F9F</color>
     <color name="other_color_dark">#676767</color>
 
+    <color name="buttonmsg_lightblue">#8bbaf7</color>
+
 
 </resources>

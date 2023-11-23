@@ -121,6 +121,7 @@ public class MQTTMessaging extends AppCompatActivity implements SensorEventListe
 
         msgToSend = findViewById(R.id.messageToSend);
         FloatingActionButton fab = findViewById(R.id.messageButton);
+        fab.setBackgroundResource(R.color.buttonmsg_lightblue);
         fab.setImageResource(R.drawable.messagesend);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
