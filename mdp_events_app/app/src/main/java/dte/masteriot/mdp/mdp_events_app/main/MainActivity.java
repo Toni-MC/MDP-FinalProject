@@ -25,6 +25,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 import java.util.Objects;
+import java.util.UUID;
+
 import dte.masteriot.mdp.mdp_events_app.R;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -53,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         myToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         setUpStyle();
-
-
-
 
 
     }
@@ -230,7 +229,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         int itemId = item.getItemId();
 
         if(itemId == R.id.messages){
-            Toast.makeText(this, "MESSAGES trying to open", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(MainActivity.this, FavouritesListMQTT.class);
             startActivity(i);
             return true;

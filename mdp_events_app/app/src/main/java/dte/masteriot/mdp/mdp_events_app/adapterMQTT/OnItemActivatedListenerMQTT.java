@@ -36,7 +36,7 @@ public class OnItemActivatedListenerMQTT implements OnItemActivatedListener<Long
         // or double clicks an item with a pointing device like a Mouse."
 
         Log.d(TAG, "Clicked item with position = " + itemdetails.getPosition()
-                + " and key = " + itemdetails.getSelectionKey());
+                + " and eventID = " + itemdetails.getSelectionKey());
 
         Intent i = new Intent(context, MQTTMessaging.class);
         i.putExtra("text", "Clicked item with position = " + itemdetails.getPosition()

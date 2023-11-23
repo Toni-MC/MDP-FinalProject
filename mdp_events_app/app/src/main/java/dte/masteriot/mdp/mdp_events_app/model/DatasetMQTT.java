@@ -14,10 +14,6 @@ public class DatasetMQTT {
     public DatasetMQTT(int n){
         this.listofitems=new ArrayList<>();
         listofitems.add(new ItemMQTT(111L,"Event1"));
-        listofitems.add(new ItemMQTT(222L,"Event2"));
-        listofitems.add(new ItemMQTT(333L,"Event3"));
-        listofitems.add(new ItemMQTT(444L,"Event4"));
-        listofitems.add(new ItemMQTT(555L,"Event5"));
     }
 
     public void add(Long EventID, String EventName){
@@ -32,9 +28,11 @@ public class DatasetMQTT {
         return listofitems.get(pos);
     }
 
-    public Long getKeyAtPosition(int pos) {
+    public Long getIDAtPosition(int pos) {
         return (listofitems.get(pos).getEventID());
     }
+
+    public String getNameAtPosition(int pos) {return (listofitems.get(pos).getEventName()); }
 
     public int getPositionOfKey(Long searchedkey) {
         // Look for the position of the Item with key = searchedkey.

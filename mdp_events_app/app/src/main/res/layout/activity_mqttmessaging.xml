@@ -20,11 +20,13 @@
         android:id="@+id/history_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_weight="10">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
+        android:id="@+id/MsgLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -33,16 +35,18 @@
         <EditText
             android:id="@+id/messageToSend"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight="6"
             android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
+            android:foregroundGravity="center"
+            android:inputType="text" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/messageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:clickable="true"
             android:src="@android:drawable/ic_input_add" />

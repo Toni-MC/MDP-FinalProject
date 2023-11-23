@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +53,11 @@ public class AdapterMQTT extends RecyclerView.Adapter<ViewHolderMQTT> {
         return dataset.getSize();
     }
     public Long getKeyAtPosition(int pos) {
-        return (dataset.getKeyAtPosition(pos));
+        return (dataset.getIDAtPosition(pos));
+    }
+
+    public String getEventNameAtPosition(int pos){
+        return (dataset.getNameAtPosition(pos));
     }
 
     public int getPositionOfKey(Long searchedkey) {
@@ -64,5 +69,6 @@ public class AdapterMQTT extends RecyclerView.Adapter<ViewHolderMQTT> {
     public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
         this.selectionTracker = selectionTracker;
     }
+
 
 }
