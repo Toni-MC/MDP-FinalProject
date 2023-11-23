@@ -106,7 +106,7 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
 
         // get username and uniqueID creation (if needed) from SharedPreferences instance
         SharedPreferences sharedPrefUser = PreferenceManager.getDefaultSharedPreferences(this);
-        username = sharedPrefUser.getString("user_name", null);
+        username = sharedPrefUser.getString("user_name", "Anon");
         Log.d("username", username);
         usernameText=findViewById(R.id.usernameText);
         usernameText.setText(username);
