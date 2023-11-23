@@ -37,8 +37,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
             is_free.setTextColor(Color.parseColor("#047A08"));
         }
         else {
-            is_free.setText(item.getPrice());
-            is_free.setTextColor(Color.parseColor("#CB6F07"));
+            is_free.setText("");
         }
 
         if(item.getImageLink() == "Default"){
