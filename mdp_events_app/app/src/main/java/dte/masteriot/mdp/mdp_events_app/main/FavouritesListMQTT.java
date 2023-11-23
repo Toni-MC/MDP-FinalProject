@@ -23,7 +23,9 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -66,6 +68,9 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
     SharedPreferences sharedPref;
     String sharedPref_key = "lightLevelFavList";
 
+    boolean noFav=true;
+    ImageView noFavImg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,6 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
         db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
         db.databaseWriteExecutor.execute(() -> {
             List<Favourites> dbList=db.favouriteDao().getAllFavourites();
-
             Log.d("fav", "lista:" + dbList );
 
             if (dbList != null){
@@ -90,19 +94,21 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
         });
 
         List<Favourites> FavouritesList= null;
+
         try {
-            FavouritesList = fav.get();
-        } catch (ExecutionException e){
+            if (fav.get().isEmpty()){
+                noFav=true;
+            }
+            else {
+                FavouritesList = fav.get();
+                noFav=false;
+            }
+        } catch (ExecutionException e) {
             throw new RuntimeException(e);
-        } catch (InterruptedException e){
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        Log.d("fav2", "ID:" + FavouritesList.get(1).eventID + " Name" + FavouritesList.get(1).eventName);
-
-        for (int i=0; i<FavouritesList.size(); i++){
-            dataset.add(FavouritesList.get(i).eventID,FavouritesList.get(i).eventName);
-        }
 
         // get username and uniqueID creation (if needed) from SharedPreferences instance
         SharedPreferences sharedPrefUser = PreferenceManager.getDefaultSharedPreferences(this);
@@ -123,7 +129,6 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
             sharedPrefUser.edit().putString("UniqueUserID", UUID.randomUUID().toString().substring(0,6)).apply();
         }
 
-
         sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -139,28 +144,48 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
 
-        //RecyclerView
-        recyclerView = findViewById(R.id.recyclerViewFavourites);
-        AdapterMQTT recyclerViewAdapter = new AdapterMQTT(dataset);
-        recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Log.d("fav2", "ID:" + FavouritesList.get(1).eventID + " Name" + FavouritesList.get(1).eventName);
 
-        OnItemActivatedListenerMQTT onItemActivatedListenerMQTT = new OnItemActivatedListenerMQTT(this, dataset);
-        tracker = new SelectionTracker.Builder<>(
-                "my-selection-id",
-                recyclerView,
-                new ItemKeyProviderMQTT(ItemKeyProvider.SCOPE_MAPPED, recyclerView),
+        if (noFav==false){
+            for (int i=0; i<FavouritesList.size(); i++) {
+                dataset.add(FavouritesList.get(i).eventID, FavouritesList.get(i).eventName);
+            }
+                noFavImg = findViewById(R.id.imageNoFav);
+                noFavImg.setVisibility(View.GONE);
+
+                recyclerView = findViewById(R.id.recyclerViewFavourites);
+                AdapterMQTT recyclerViewAdapter = new AdapterMQTT(dataset);
+                recyclerView.setAdapter(recyclerViewAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+                OnItemActivatedListenerMQTT onItemActivatedListenerMQTT = new OnItemActivatedListenerMQTT(this, dataset);
+                tracker = new SelectionTracker.Builder<>(
+                        "my-selection-id",
+                        recyclerView,
+                        new ItemKeyProviderMQTT(ItemKeyProvider.SCOPE_MAPPED, recyclerView),
 //                new StableIdKeyProvider(recyclerView), // This caused the app to crash on long clicks
-                new ItemDetailsLookupMQTT(recyclerView),
-                StorageStrategy.createLongStorage())
-                .withOnItemActivatedListener(onItemActivatedListenerMQTT)
-                .build();
-        recyclerViewAdapter.setSelectionTracker(tracker);
+                        new ItemDetailsLookupMQTT(recyclerView),
+                        StorageStrategy.createLongStorage())
+                        .withOnItemActivatedListener(onItemActivatedListenerMQTT)
+                        .build();
+                recyclerViewAdapter.setSelectionTracker(tracker);
+
+            }
+         else {
+            noFavImg = findViewById(R.id.imageNoFav);
+            noFavImg.setImageResource(R.drawable.nofav);
+
+            recyclerView = findViewById(R.id.recyclerViewFavourites);
+            recyclerView.setVisibility(View.GONE);
+        }
+
+        //RecyclerView
 
 
         setUpStyle();
     }
+
 
     public void setUpStyle(){
 

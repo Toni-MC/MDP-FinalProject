@@ -57,5 +57,15 @@
             android:textSize="12sp" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imageNoFav"
+        android:layout_width="325dp"
+        android:layout_height="329dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fav_toolbar"
+        tools:srcCompat="@tools:sample/avatars" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
