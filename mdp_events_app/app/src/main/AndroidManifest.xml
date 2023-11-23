@@ -51,6 +51,9 @@
             android:name=".main.SecondActivity"
             android:exported="true" />
         <activity
+            android:name=".main.InternetConnectionError"
+            android:exported="true" />
+        <activity
             android:name=".main.ListActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>

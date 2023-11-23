@@ -1,6 +1,7 @@
 package dte.masteriot.mdp.mdp_events_app.main;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -54,6 +55,10 @@ public class LoadEventsImages implements Runnable {
                 string_URL = item.getLink();
                 string_URL = string_URL.replace("http", "https");
                 String html = get_html();
+
+                if(html.contains("Exception")){
+                    i = dataset.getSize();
+                }
 
                 String image_url = get_image_url(html);
 
