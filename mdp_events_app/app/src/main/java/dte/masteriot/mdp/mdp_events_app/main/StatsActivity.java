@@ -57,17 +57,36 @@ public class StatsActivity extends AppCompatActivity {
         tv = findViewById(R.id.stat_other_value);
         tv.setText(Integer.toString(other_value));
 
-        final float fontSize = PixelUtils.spToPix(23);
+        final float fontSize = PixelUtils.spToPix(20);
 
         PieChart pieChart = (PieChart) findViewById(R.id.plot);
+        int total = sport_value + music_value + art_value + theater_value + cursos_value + other_value;
 
         // Set up sample data for the chart
-        Segment s1 = new Segment("Sport", sport_value);
-        Segment s2 = new Segment("Music", music_value);
-        Segment s3 = new Segment("Art", art_value);
-        Segment s4 = new Segment("Theater", theater_value);
-        Segment s5 = new Segment("Workshop", other_value);
-        Segment s6 = new Segment("Other", other_value);
+        Segment s1 = new Segment("", sport_value);
+        Segment s2 = new Segment("", music_value);
+        Segment s3 = new Segment("", art_value);
+        Segment s4 = new Segment("", theater_value);
+        Segment s5 = new Segment("", cursos_value);
+        Segment s6 = new Segment("", other_value);
+        if(sport_value > total/20){
+            s1 = new Segment("Sport", sport_value);
+        }
+        if(music_value > total/20){
+            s2 = new Segment("Music", music_value);
+        }
+        if(art_value > total/20){
+            s3 = new Segment("Art", art_value);
+        }
+        if(theater_value > total/20){
+            s4 = new Segment("Theater", theater_value);
+        }
+        if(cursos_value > total/20){
+            s5 = new Segment("Workshop", cursos_value);
+        }
+        if(other_value > total/20){
+            s6 = new Segment("Other", other_value);
+        }
 
         // Add segments to the chart
         SegmentFormatter sf1 = new SegmentFormatter(ContextCompat.getColor(this, R.color.sport_color));
