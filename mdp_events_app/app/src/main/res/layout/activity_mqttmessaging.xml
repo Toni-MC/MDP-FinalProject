@@ -49,6 +49,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:clickable="true"
-            android:src="@android:drawable/ic_input_add" />
+            android:src="@android:drawable/ic_input_add"
+            app:backgroundTint="#C2DAF8" />
     </LinearLayout>
 </LinearLayout>
