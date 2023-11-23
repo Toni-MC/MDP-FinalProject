@@ -25,7 +25,7 @@
             app:entries="@array/theme_entries"
             app:entryValues="@array/theme_values"
             app:key="static_theme_selected"
-            app:title="Static theme chosen"
+            app:title="Static theme"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
