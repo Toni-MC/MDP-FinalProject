@@ -112,13 +112,19 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
                 super.handleMessage(msg);
                 if((string_result = msg.getData().getString("text")) != null) {
-                    json_str = string_result;
-                    update_dataset();
+                    if(string_result.contains("Exception")){
+                        Intent i = new Intent(ListActivity.this , InternetConnectionError.class);
+                        startActivity(i);
+                    }
+                    else{
+                        json_str = string_result;
+                        update_dataset();
+                    }
                 }
             }
         };
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null && tracker != null) {
             // Restore state related to selections previously made
             tracker.onRestoreInstanceState(savedInstanceState);
         }

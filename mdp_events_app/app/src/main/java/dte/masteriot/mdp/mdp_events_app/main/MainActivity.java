@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     String json_str;
     ExecutorService es;
     Handler handler;
+    ImageView internetMsg;
     private static final String URL_JSON = "https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json";
     private static final String  CONTENT_TYPE_JSON = "application/json";
 
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public void seeStatistics(){
         handler = new Handler(Looper.getMainLooper()) {
+
             @Override
             public void handleMessage(@NonNull Message msg) {
                 // message received from background thread: load complete (or failure)
@@ -121,9 +124,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 super.handleMessage(msg);
                 if((string_result = msg.getData().getString("text")) != null) {
-                    json_str = string_result;
-                    compute_statistics(json_str);
-                    show_statistics();
+                    if(string_result.contains("Exception")){
+                        Intent i = new Intent(MainActivity.this , InternetConnectionError.class);
+                        startActivity(i);
+                    }
+                    else{
+                        json_str = string_result;
+                        compute_statistics(json_str);
+                        show_statistics();
+                    }
                 }
             }
         };
