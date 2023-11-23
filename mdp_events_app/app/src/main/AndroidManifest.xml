@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -16,6 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppThemeMain"
         tools:targetApi="31">
+        <activity
+            android:name=".main.FavouritesListMQTT"
+            android:exported="false" />
+        <activity
+            android:name=".adapterMQTT.HistoryAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".main.MQTTMessaging"
+            android:exported="false" />
         <activity
             android:name=".main.SettingsActivity"
             android:exported="false"
@@ -43,6 +53,7 @@
         <activity
             android:name=".main.ListActivity"
             android:exported="true" />
+        <service android:name="org.eclipse.paho.android.service.MqttService"/>
     </application>
 
 </manifest>

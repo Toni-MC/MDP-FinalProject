@@ -37,6 +37,7 @@ import org.json.JSONObject;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.UUID;
 
 import dte.masteriot.mdp.mdp_events_app.R;
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         myToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         setUpStyle();
+
 
     }
 
@@ -107,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void seeOtherList(View v){
         Intent i = new Intent(MainActivity.this , ListActivity.class);
         i.putExtra("event_type","other");
-        i.putExtra("json_str", json_str);
         startActivity(i);
     }
 
@@ -368,7 +369,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         int itemId = item.getItemId();
 
         if(itemId == R.id.messages){
-            Toast.makeText(this, "MESSAGES CLICKED", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MainActivity.this, FavouritesListMQTT.class);
+            startActivity(i);
             return true;
         }else if(itemId == R.id.settings){
             Intent i = new Intent(MainActivity.this , SettingsActivity.class);
