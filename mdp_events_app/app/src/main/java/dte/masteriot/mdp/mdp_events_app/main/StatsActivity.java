@@ -66,7 +66,7 @@ public class StatsActivity extends AppCompatActivity {
         Segment s2 = new Segment("Music", music_value);
         Segment s3 = new Segment("Art", art_value);
         Segment s4 = new Segment("Theater", theater_value);
-        Segment s5 = new Segment("Courses", other_value);
+        Segment s5 = new Segment("Workshop", other_value);
         Segment s6 = new Segment("Other", other_value);
 
         // Add segments to the chart
