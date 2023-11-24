@@ -74,6 +74,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
     String imageLink;
     String periocity;
     List<String> periocity_list;
+    int theme = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,7 +202,14 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
             public void onClick(View v) {
                 if(favouriteSelected){
                     //the event was deselected
-                    favButton.setImageResource(R.drawable.favourite_45);
+
+                    if(theme<2){
+                        favButton.setImageResource(R.drawable.favourite_45);
+                    }else{
+                        favButton.setImageResource(R.drawable.favourite_darktheme);
+                    }
+
+
                     favouriteSelected = false;
                     //delete from database as favourite event
                     AppDatabase db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
@@ -435,6 +443,7 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
 
         Button mapButton = findViewById(R.id.mapButton);
         Button linkButton = findViewById(R.id.linkButton);
+        ImageButton fav_button = findViewById(R.id.fav_button);
 
         switch (style){
 
@@ -455,6 +464,10 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
 
                 mapButton.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
                 linkButton.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
+                if(!favouriteSelected){
+                    fav_button.setImageResource(R.drawable.favourite_45);
+                }
+                theme = 0;
                 break;
             }
             case 1:{
@@ -474,6 +487,10 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
 
                 mapButton.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
                 linkButton.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
+                if(!favouriteSelected){
+                    fav_button.setImageResource(R.drawable.favourite_45);
+                }
+                theme = 1;
                 break;
 
             }
@@ -494,6 +511,10 @@ public class SecondActivity extends AppCompatActivity implements OnMapReadyCallb
 
                 mapButton.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
                 linkButton.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
+                if(!favouriteSelected){
+                    fav_button.setImageResource(R.drawable.favourite_darktheme);
+                }
+                theme = 2;
                 break;
 
             }
