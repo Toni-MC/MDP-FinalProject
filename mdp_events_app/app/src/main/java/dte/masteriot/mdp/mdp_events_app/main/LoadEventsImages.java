@@ -70,6 +70,12 @@ public class LoadEventsImages implements Runnable {
                 msg.sendToTarget(); // send the message to the target
             }
         }
+        if(dataset.getSize() == 0){
+            msg = creator.obtainMessage(); // message to send to the UI thread
+            msg_data = msg.getData(); // message data
+            msg_data.putInt("progress", -1); // (key, value = progress)
+            msg.sendToTarget(); // send the message to the target
+        }
     }
 
     public String get_html() {
