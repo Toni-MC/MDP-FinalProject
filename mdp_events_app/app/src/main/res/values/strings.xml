@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">mdp_events_app</string>
+    <string name="app_name">MeetMadrid</string>
     <string name="date">Date</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
