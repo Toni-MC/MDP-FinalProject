@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="dark_background">#121212</color>
+    <color name="dark_card_background">#212121</color>
     <color name="dark_text">#E6E6E6</color>
     <color name="dark_primary">#1A3D6A</color>
     <color name="dark_secundary">#FF000000</color>

@@ -1,5 +1,6 @@
 package dte.masteriot.mdp.mdp_events_app.adapterMQTT;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,9 @@ public class AdapterMQTT extends RecyclerView.Adapter<ViewHolderMQTT> {
     private static final String TAG = "TAGListOfItems, MyAdapterMQTT";
     private  final DatasetMQTT dataset;
     private SelectionTracker<Long> selectionTracker;
+
+    private int currentStyle;
+    private Context context;
 
     public AdapterMQTT(DatasetMQTT dataset) {
         super();
@@ -45,7 +49,7 @@ public class AdapterMQTT extends RecyclerView.Adapter<ViewHolderMQTT> {
         Long itemKey = item.getEventID();
 
         Log.d(TAG, "onBindViewHolder() called for element in position " + position);
-        holder.bindValues(item);
+        holder.bindValues(item, currentStyle, context);
     }
 
     @Override
@@ -64,6 +68,15 @@ public class AdapterMQTT extends RecyclerView.Adapter<ViewHolderMQTT> {
         //Log.d(TAG, "getPositionOfKey() called for key " + searchedkey + ", returns " + position);
         int position = dataset.getPositionOfKey(searchedkey);
         return position;
+    }
+
+    public void changeStyle(int style){
+        currentStyle=style;
+        notifyDataSetChanged();
+    }
+
+    public void setContext(Context context2){
+        this.context=context2;
     }
 
     public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
