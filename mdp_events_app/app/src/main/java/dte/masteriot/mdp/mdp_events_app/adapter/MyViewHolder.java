@@ -48,22 +48,22 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
         if(item.getImageLink() == "Default"){
             switch (item.getType()){
-                case "sport":
+                case "Sport":
                     Picasso.get().load(R.drawable.sport_icon).resize(130,130).into(image);
                     break;
-                case "art":
+                case "Art":
                     Picasso.get().load(R.drawable.arte_icon).resize(130,130).into(image);
                     break;
-                case "music":
+                case "Music":
                     Picasso.get().load(R.drawable.microfono_icons).resize(130,130).into(image);
                     break;
-                case "theater":
+                case "Theater":
                     Picasso.get().load(R.drawable.teatro_icon).resize(130,130).into(image);
                     break;
-                case "courses":
+                case "Workshop":
                     Picasso.get().load(R.drawable.curso_icon).resize(130,130).into(image);
                     break;
-                case "other":
+                case "Other":
                     Picasso.get().load(R.drawable.otro_icon).resize(130,130).into(image);
                     break;
                 default:

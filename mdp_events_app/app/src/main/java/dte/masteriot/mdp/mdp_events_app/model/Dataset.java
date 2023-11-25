@@ -124,13 +124,13 @@ public class Dataset {
 
     public boolean get_match_type(String type){
         Dictionary<String, String> dic = new Hashtable<>();
-        dic.put("sport", "/ActividadesDeportivas");
-        dic.put("art", "/Exposiciones,/ActividadesCalleArteUrbano");
-        dic.put("music", "/Musica");
-        dic.put("theater", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales," +
+        dic.put("Sport", "/ActividadesDeportivas");
+        dic.put("Art", "/Exposiciones,/ActividadesCalleArteUrbano");
+        dic.put("Music", "/Musica");
+        dic.put("Theater", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales," +
                 "/CircoMagia,/CuentacuentosTiteresMarionetas");
-        dic.put("courses", "/CursosTalleres,/ConferenciasColoquios");
-        dic.put("other", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales," +
+        dic.put("Workshop", "/CursosTalleres,/ConferenciasColoquios");
+        dic.put("Other", "/TeatroPerformance,/DanzaBaile,/CineActividadesAudiovisuales," +
                 "/CircoMagia,/CuentacuentosTiteresMarionetas,/ActividadesDeportivas,"+
                 "/Exposiciones,/ActividadesCalleArteUrbano,/Musica,/CursosTalleres,/ConferenciasColoquios");
 
@@ -145,7 +145,7 @@ public class Dataset {
             }
         }
 
-        if(this.event_type.equals("other")){
+        if(this.event_type.equals("Other")){
             match = !match;
         }
 
