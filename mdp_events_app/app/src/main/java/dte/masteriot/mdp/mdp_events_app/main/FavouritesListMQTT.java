@@ -71,6 +71,8 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
     boolean noFav=true;
     ImageView noFavImg;
 
+    private AdapterMQTT recyclerViewAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +156,8 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
                 noFavImg.setVisibility(View.GONE);
 
                 recyclerView = findViewById(R.id.recyclerViewFavourites);
-                AdapterMQTT recyclerViewAdapter = new AdapterMQTT(dataset);
+                recyclerViewAdapter = new AdapterMQTT(dataset);
+                recyclerViewAdapter.setContext(this);
                 recyclerView.setAdapter(recyclerViewAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -268,7 +271,7 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
 
         switch (style){
             case 0:{
-
+                recyclerViewAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.light_background);
                 myToolbar.setBackgroundResource(R.color.light_primary);
                 usernameText.setTextColor(ContextCompat.getColor(this, R.color.light_text));
@@ -277,7 +280,7 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
                 break;
             }
             case 1:{
-
+                recyclerViewAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.medium_background);
                 myToolbar.setBackgroundResource(R.color.medium_primary);
                 usernameText.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
@@ -288,7 +291,7 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
 
             }
             case 2:{
-
+                recyclerViewAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.dark_background);
                 myToolbar.setBackgroundResource(R.color.dark_primary);
                 usernameText.setTextColor(ContextCompat.getColor(this, R.color.dark_text));

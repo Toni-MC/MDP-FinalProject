@@ -12,15 +12,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
@@ -79,22 +76,10 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     String date1;
     String date2;
 
-    String typeFiltered;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
-        Intent imputIntent = getIntent();
-        typeFiltered = imputIntent.getStringExtra("event_type");
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.list_toolbar);
-        setSupportActionBar(myToolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(typeFiltered);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        myToolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        myToolbar.setNavigationIcon(R.drawable.back_arrow);
 
         sharedPref = getApplicationContext().getSharedPreferences("sharedPref_light", Context.MODE_PRIVATE);
 
@@ -134,7 +119,6 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         date2 = sdf.format(c.getTime());
 
         load_events();
-
     }
 
     @Override
@@ -154,7 +138,8 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
     }
 
     void update_dataset(){
-        String event_type = typeFiltered;
+        Intent imputIntent = getIntent();
+        String event_type = imputIntent.getStringExtra("event_type");
         dataset.date1 = date1;
         dataset.date2 = date2;
         dataset.event_type = event_type;
@@ -163,8 +148,8 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         asyncManager.launchBackgroundTask(dataset);
 
         int max_limit;
-        if(dataset.getSize() > 10){
-            max_limit = 5;
+        if(dataset.getSize() > 30){
+            max_limit = 15;
         }
         else{
             max_limit = dataset.getSize();
@@ -179,10 +164,8 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
                 else {
                     recyclerViewAdapter.notifyDataSetChanged();
                 }
-                if(n_item >= (max_limit -1)){
-                    if(loadingDialog.isShowing()){
-                        loadingDialog.hide();
-                    }
+                if(n_item == (max_limit -1)){
+                    loadingDialog.hide();
                 }
             }
         };
@@ -199,6 +182,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         recyclerViewAdapter = new MyAdapter(dataset);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewAdapter.setContext(this);
 
         // Choose the layout manager to be set.
         // some options for the layout manager:  GridLayoutManager, LinearLayoutManager, StaggeredGridLayoutManager
@@ -368,6 +352,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         switch (style){
             case 0:{
                 currentTheme = 0;
+                if(recyclerView != null){ recyclerViewAdapter.changeStyle(style); }
                 layout.setBackgroundResource(R.color.light_background);
                 recycler.setBackgroundResource(R.color.light_background);
                 selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
@@ -381,6 +366,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
             }
             case 1:{
                 currentTheme = 1;
+                if(recyclerView != null){ recyclerViewAdapter.changeStyle(style); }
                 layout.setBackgroundResource(R.color.medium_background);
                 recycler.setBackgroundResource(R.color.medium_background);
                 selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
@@ -395,6 +381,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
             }
             case 2:{
                 currentTheme = 2;
+                if(recyclerView != null){ recyclerViewAdapter.changeStyle(style); }
                 layout.setBackgroundResource(R.color.dark_background);
                 recycler.setBackgroundResource(R.color.dark_background);
                 selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
@@ -411,15 +398,6 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onStart() {
