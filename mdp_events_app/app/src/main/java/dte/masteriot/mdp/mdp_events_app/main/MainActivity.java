@@ -100,22 +100,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(internet_conn){
             i = new Intent(MainActivity.this , ListActivity.class);
             if(v.getId() == R.id.bSport){
-                i.putExtra("event_type","sport");
+                i.putExtra("event_type","Sport");
             }
             else if(v.getId() == R.id.bMusic){
-                i.putExtra("event_type","music");
+                i.putExtra("event_type","Music");
             }
             else if(v.getId() == R.id.bArt){
-                i.putExtra("event_type","art");
+                i.putExtra("event_type","Art");
             }
             else if(v.getId() == R.id.bTheater){
-                i.putExtra("event_type","theater");
+                i.putExtra("event_type","Theater");
             }
             else if(v.getId() == R.id.bCursos){
-                i.putExtra("event_type","courses");
+                i.putExtra("event_type","Workshop");
             }
             else{
-                i.putExtra("event_type","other");
+                i.putExtra("event_type","Other");
             }
         }
         else{

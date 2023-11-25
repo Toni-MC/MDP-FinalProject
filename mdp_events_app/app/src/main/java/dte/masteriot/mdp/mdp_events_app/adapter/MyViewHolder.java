@@ -43,23 +43,28 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
             is_free.setTextColor(Color.parseColor("#047A08"));
         }
         else {
-            is_free.setText(item.getPrice());
-            is_free.setTextColor(Color.parseColor("#CB6F07"));
+            is_free.setText("");
         }
 
         if(item.getImageLink() == "Default"){
             switch (item.getType()){
-                case "sport":
+                case "Sport":
                     Picasso.get().load(R.drawable.sport_icon).resize(130,130).into(image);
                     break;
-                case "art":
+                case "Art":
                     Picasso.get().load(R.drawable.arte_icon).resize(130,130).into(image);
                     break;
-                case "music":
+                case "Music":
                     Picasso.get().load(R.drawable.microfono_icons).resize(130,130).into(image);
                     break;
-                case "theater":
+                case "Theater":
                     Picasso.get().load(R.drawable.teatro_icon).resize(130,130).into(image);
+                    break;
+                case "Workshop":
+                    Picasso.get().load(R.drawable.curso_icon).resize(130,130).into(image);
+                    break;
+                case "Other":
+                    Picasso.get().load(R.drawable.otro_icon).resize(130,130).into(image);
                     break;
                 default:
                     break;
@@ -87,22 +92,15 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
             case 1: {
                 title.setTextColor(ContextCompat.getColor(context, R.color.medium_text));
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.medium_background));
-
                 break;
-
             }
             case 2: {
                 title.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.dark_card_background));
                 break;
-
             }
 
-
-
         }
-
-
 
     }
 
