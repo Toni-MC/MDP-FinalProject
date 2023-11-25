@@ -1,5 +1,6 @@
 package dte.masteriot.mdp.mdp_events_app.adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private final Dataset dataset; // reference to the dataset
     private SelectionTracker<Long> selectionTracker; // this is set through method setSelectionTracker()
+
+    private int currentStyle;
+    private Context context;
+
 
     public MyAdapter(Dataset dataset) {
         super();
@@ -50,7 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         Log.d(TAG, "onBindViewHolder() called for element in position " + position +
                 ", Selected? = " + isItemSelected);
-        holder.bindValues(item, isItemSelected);
+        holder.bindValues(item, isItemSelected, currentStyle, context);
     }
 
     @Override
@@ -68,6 +73,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         //Log.d(TAG, "getPositionOfKey() called for key " + searchedkey + ", returns " + position);
         int position = dataset.getPositionOfKey(searchedkey);
         return position;
+    }
+
+    public void changeStyle(int style){
+        currentStyle=style;
+        notifyDataSetChanged();
+    }
+    public void setContext(Context context2){
+        this.context=context2;
     }
 
     public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
