@@ -145,6 +145,7 @@ public class MQTTMessaging extends AppCompatActivity implements SensorEventListe
 
         mAdapter = new HistoryAdapter(new ArrayList<>());
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setContext(this);
 
 
         String clientId2 = String.valueOf(clientId) + System.currentTimeMillis();
@@ -380,7 +381,7 @@ public class MQTTMessaging extends AppCompatActivity implements SensorEventListe
 
         switch (style){
             case 0:{
-
+                mAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.light_background);
                 layout1.setBackgroundResource(R.color.light_background);
                 myToolbar.setBackgroundResource(R.color.light_primary);
@@ -390,7 +391,7 @@ public class MQTTMessaging extends AppCompatActivity implements SensorEventListe
                 break;
             }
             case 1:{
-
+                mAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.medium_background);
                 layout1.setBackgroundResource(R.color.medium_background);
                 myToolbar.setBackgroundResource(R.color.medium_primary);
@@ -402,7 +403,7 @@ public class MQTTMessaging extends AppCompatActivity implements SensorEventListe
 
             }
             case 2:{
-
+                mAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.dark_background);
                 layout1.setBackgroundResource(R.color.dark_background);
                 myToolbar.setBackgroundResource(R.color.dark_primary);
