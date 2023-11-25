@@ -40,7 +40,6 @@
                 android:backgroundTint="@color/sport_color"
                 app:iconSize="50dp"
                 style="@style/Widget.MaterialComponents.Button.Icon"
-                android:onClick="seeSportList"
                 android:padding="5dp"
                 android:layout_margin="10dp" />
 
@@ -55,7 +54,6 @@
                 android:backgroundTint="@color/music_color"
                 app:iconSize="50dp"
                 style="@style/Widget.MaterialComponents.Button.Icon"
-                android:onClick="seeMusicList"
                 android:padding="5dp"
                 android:layout_margin="10dp"/>
 
@@ -71,12 +69,11 @@
                 android:backgroundTint="@color/art_color"
                 app:iconSize="50dp"
                 style="@style/Widget.MaterialComponents.Button.Icon"
-                android:onClick="seeArtList"
                 android:padding="5dp"
                 android:layout_margin="10dp"/>
 
             <Button
-                android:id="@+id/bTeather"
+                android:id="@+id/bTheater"
                 android:layout_width="300dp"
                 android:layout_height="75dp"
                 android:text="Theater"
@@ -86,7 +83,6 @@
                 android:backgroundTint="@color/theater_color"
                 app:iconSize="50dp"
                 style="@style/Widget.MaterialComponents.Button.Icon"
-                android:onClick="seeTeatherList"
                 android:padding="5dp"
                 android:layout_margin="10dp"/>
 
@@ -101,7 +97,6 @@
                 android:backgroundTint="@color/cursos_color"
                 app:iconSize="50dp"
                 style="@style/Widget.MaterialComponents.Button.Icon"
-                android:onClick="seeCoursesList"
                 android:padding="5dp"
                 android:layout_margin="10dp"/>
 
@@ -117,7 +112,6 @@
                 android:backgroundTint="@color/other_color"
                 app:iconSize="50dp"
                 style="@style/Widget.MaterialComponents.Button.Icon"
-                android:onClick="seeOtherList"
                 android:padding="5dp"
                 android:layout_margin="10dp"/>
 

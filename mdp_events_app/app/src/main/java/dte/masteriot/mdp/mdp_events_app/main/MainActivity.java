@@ -42,7 +42,7 @@ import java.util.UUID;
 
 import dte.masteriot.mdp.mdp_events_app.R;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener {
 
     private SensorManager sensorManager;
     private Sensor lightSensor;
@@ -75,43 +75,63 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         setUpStyle();
 
+        Button bt_sport = findViewById(R.id.bSport);
+        Button bt_art = findViewById(R.id.bArt);
+        Button bt_music = findViewById(R.id.bMusic);
+        Button bt_theater = findViewById(R.id.bTheater);
+        Button bt_ws = findViewById(R.id.bCursos);
+        Button bt_other = findViewById(R.id.bOther);
+
+        bt_sport.setOnClickListener(this);
+        bt_art.setOnClickListener(this);
+        bt_music.setOnClickListener(this);
+        bt_theater.setOnClickListener(this);
+        bt_ws.setOnClickListener(this);
+        bt_other.setOnClickListener(this);
+
 
     }
 
-    public void seeSportList(View v){
-        Intent i = new Intent(MainActivity.this , ListActivity.class);
-        i.putExtra("event_type","sport");
+    @Override
+    public void onClick(View v) {
+
+        boolean internet_conn = InternetIsConnected();
+        Intent i;
+        if(internet_conn){
+            i = new Intent(MainActivity.this , ListActivity.class);
+            if(v.getId() == R.id.bSport){
+                i.putExtra("event_type","sport");
+            }
+            else if(v.getId() == R.id.bMusic){
+                i.putExtra("event_type","music");
+            }
+            else if(v.getId() == R.id.bArt){
+                i.putExtra("event_type","art");
+            }
+            else if(v.getId() == R.id.bTheater){
+                i.putExtra("event_type","theater");
+            }
+            else if(v.getId() == R.id.bCursos){
+                i.putExtra("event_type","courses");
+            }
+            else{
+                i.putExtra("event_type","other");
+            }
+        }
+        else{
+            i = new Intent(MainActivity.this , InternetConnectionError.class);
+        }
+
         startActivity(i);
     }
 
-    public void seeMusicList(View v){
-        Intent i = new Intent(MainActivity.this , ListActivity.class);
-        i.putExtra("event_type","music");
-        startActivity(i);
-    }
-
-    public void seeArtList(View v){
-        Intent i = new Intent(MainActivity.this , ListActivity.class);
-        i.putExtra("event_type","art");
-        startActivity(i);
-    }
-
-    public void seeTeatherList(View v){
-        Intent i = new Intent(MainActivity.this , ListActivity.class);
-        i.putExtra("event_type","theater");
-        startActivity(i);
-    }
-
-    public void seeCoursesList(View v){
-        Intent i = new Intent(MainActivity.this , ListActivity.class);
-        i.putExtra("event_type","courses");
-        startActivity(i);
-    }
-
-    public void seeOtherList(View v){
-        Intent i = new Intent(MainActivity.this , ListActivity.class);
-        i.putExtra("event_type","other");
-        startActivity(i);
+    public boolean InternetIsConnected() {
+        try {
+            String command = "ping -c 1 google.com";
+            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void seeStatistics(){
@@ -124,15 +144,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 super.handleMessage(msg);
                 if((string_result = msg.getData().getString("text")) != null) {
-                    if(string_result.contains("Exception")){
-                        Intent i = new Intent(MainActivity.this , InternetConnectionError.class);
-                        startActivity(i);
-                    }
-                    else{
-                        json_str = string_result;
-                        compute_statistics(json_str);
-                        show_statistics();
-                    }
+                    json_str = string_result;
+                    compute_statistics(json_str);
+                    show_statistics();
                 }
             }
         };
@@ -310,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Button bSport = findViewById(R.id.bSport);
         Button bMusic = findViewById(R.id.bMusic);
         Button bArt = findViewById(R.id.bArt);
-        Button bTeather = findViewById(R.id.bTeather);
+        Button bTeather = findViewById(R.id.bTheater);
         Button bCursos = findViewById(R.id.bCursos);
 
         switch (style){
@@ -366,27 +380,31 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         for (int i = 0; i < menu.size(); i++) {
             MenuItem menuItem = menu.getItem(i);
             menuItem.getIcon().setColorFilter(ContextCompat.getColor(this, R.color.dark_text), PorterDuff.Mode.SRC_IN);
-
         }
-
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-
+        Intent i;
         if(itemId == R.id.messages){
-            Intent i = new Intent(MainActivity.this, FavouritesListMQTT.class);
+            i = new Intent(MainActivity.this, FavouritesListMQTT.class);
             startActivity(i);
             return true;
         }else if(itemId == R.id.settings){
-            Intent i = new Intent(MainActivity.this , SettingsActivity.class);
+            i = new Intent(MainActivity.this , SettingsActivity.class);
             startActivity(i);
             return true;
         }else if(itemId == R.id.stats){
-            seeStatistics();
+            boolean internet_conn = InternetIsConnected();
+            if(internet_conn){
+                seeStatistics();
+            }
+            else{
+                i = new Intent(MainActivity.this , InternetConnectionError.class);
+                startActivity(i);
+            }
             return true;
         }else{
             return super.onOptionsItemSelected(item);
@@ -402,7 +420,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         setUpStyle();
     }
-
-
 
 }

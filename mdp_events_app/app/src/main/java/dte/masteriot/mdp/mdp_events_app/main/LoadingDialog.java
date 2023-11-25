@@ -55,8 +55,8 @@ public class LoadingDialog extends Dialog {
     @Override
     public boolean onPreparePanel(int featureId, @Nullable View view, @NonNull Menu menu) {
         max = featureId;
-        if(featureId > 20){
-            max = 15;
+        if(featureId > 10){
+            max = 5;
         }
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(max);
