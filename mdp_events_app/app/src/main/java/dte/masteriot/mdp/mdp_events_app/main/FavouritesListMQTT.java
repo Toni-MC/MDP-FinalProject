@@ -36,6 +36,7 @@ import java.util.concurrent.ExecutionException;
 
 import dte.masteriot.mdp.mdp_events_app.R;
 import dte.masteriot.mdp.mdp_events_app.adapterMQTT.AdapterMQTT;
+import dte.masteriot.mdp.mdp_events_app.adapterMQTT.HistoryAdapter;
 import dte.masteriot.mdp.mdp_events_app.adapterMQTT.ItemDetailsLookupMQTT;
 import dte.masteriot.mdp.mdp_events_app.adapterMQTT.ItemKeyProviderMQTT;
 import dte.masteriot.mdp.mdp_events_app.adapterMQTT.OnItemActivatedListenerMQTT;
@@ -64,6 +65,7 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
     private Sensor lightSensor;
     private Boolean firstMeasure;
     SharedPreferences sharedPref;
+    private AdapterMQTT recyclerViewAdapter;
     String sharedPref_key = "lightLevelFavList";
 
 
@@ -138,6 +140,46 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
         toolbar.setNavigationIcon(R.drawable.back_arrow);
 
 
+<<<<<<< Updated upstream
+=======
+        // Log.d("fav2", "ID:" + FavouritesList.get(1).eventID + " Name" + FavouritesList.get(1).eventName);
+
+        if (noFav==false){
+            for (int i=0; i<FavouritesList.size(); i++) {
+                dataset.add(FavouritesList.get(i).eventID, FavouritesList.get(i).eventName);
+            }
+                noFavImg = findViewById(R.id.imageNoFav);
+                noFavImg.setVisibility(View.GONE);
+
+                recyclerView = findViewById(R.id.recyclerViewFavourites);
+                recyclerViewAdapter = new AdapterMQTT(dataset);
+                recyclerViewAdapter.setContext(this);
+                recyclerView.setAdapter(recyclerViewAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+                OnItemActivatedListenerMQTT onItemActivatedListenerMQTT = new OnItemActivatedListenerMQTT(this, dataset);
+                tracker = new SelectionTracker.Builder<>(
+                        "my-selection-id",
+                        recyclerView,
+                        new ItemKeyProviderMQTT(ItemKeyProvider.SCOPE_MAPPED, recyclerView),
+//                new StableIdKeyProvider(recyclerView), // This caused the app to crash on long clicks
+                        new ItemDetailsLookupMQTT(recyclerView),
+                        StorageStrategy.createLongStorage())
+                        .withOnItemActivatedListener(onItemActivatedListenerMQTT)
+                        .build();
+                recyclerViewAdapter.setSelectionTracker(tracker);
+
+            }
+         else {
+            noFavImg = findViewById(R.id.imageNoFav);
+            noFavImg.setImageResource(R.drawable.nofav);
+
+            recyclerView = findViewById(R.id.recyclerViewFavourites);
+            recyclerView.setVisibility(View.GONE);
+        }
+
+>>>>>>> Stashed changes
         //RecyclerView
         recyclerView = findViewById(R.id.recyclerViewFavourites);
         AdapterMQTT recyclerViewAdapter = new AdapterMQTT(dataset);
@@ -242,7 +284,7 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
 
         switch (style){
             case 0:{
-
+                recyclerViewAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.light_background);
                 myToolbar.setBackgroundResource(R.color.light_primary);
                 usernameText.setTextColor(ContextCompat.getColor(this, R.color.light_text));
@@ -251,7 +293,7 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
                 break;
             }
             case 1:{
-
+                recyclerViewAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.medium_background);
                 myToolbar.setBackgroundResource(R.color.medium_primary);
                 usernameText.setTextColor(ContextCompat.getColor(this, R.color.medium_text));
@@ -262,7 +304,7 @@ public class FavouritesListMQTT extends AppCompatActivity implements SensorEvent
 
             }
             case 2:{
-
+                recyclerViewAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.dark_background);
                 myToolbar.setBackgroundResource(R.color.dark_primary);
                 usernameText.setTextColor(ContextCompat.getColor(this, R.color.dark_text));

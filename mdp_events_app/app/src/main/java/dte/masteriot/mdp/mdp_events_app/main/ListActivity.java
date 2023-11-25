@@ -358,6 +358,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         switch (style){
             case 0:{
                 currentTheme = 0;
+                recyclerViewAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.light_background);
                 recycler.setBackgroundResource(R.color.light_background);
                 selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.light_primary));
@@ -371,6 +372,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
             }
             case 1:{
                 currentTheme = 1;
+                recyclerViewAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.medium_background);
                 recycler.setBackgroundResource(R.color.medium_background);
                 selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.medium_primary));
@@ -385,6 +387,7 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
             }
             case 2:{
                 currentTheme = 2;
+                recyclerViewAdapter.changeStyle(style);
                 layout.setBackgroundResource(R.color.dark_background);
                 recycler.setBackgroundResource(R.color.dark_background);
                 selectdate.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_primary));
