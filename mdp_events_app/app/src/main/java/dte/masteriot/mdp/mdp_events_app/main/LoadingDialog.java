@@ -33,14 +33,11 @@ public class LoadingDialog extends Dialog {
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity = Gravity.CENTER;
         getWindow().setAttributes(params);
-//        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setTitle(null);
         setCancelable(false);
         setOnCancelListener(null);
         View view = LayoutInflater.from(context).inflate(R.layout.loading_dialog, null);
         setContentView(view);
-//        String msg = max + " events to load";
-//        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
 
     }
 

@@ -112,19 +112,13 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
 
                 super.handleMessage(msg);
                 if((string_result = msg.getData().getString("text")) != null) {
-                    if(string_result.contains("Exception")){
-                        Intent i = new Intent(ListActivity.this , InternetConnectionError.class);
-                        startActivity(i);
-                    }
-                    else{
-                        json_str = string_result;
-                        update_dataset();
-                    }
+                    json_str = string_result;
+                    update_dataset();
                 }
             }
         };
 
-        if (savedInstanceState != null && tracker != null) {
+        if (savedInstanceState != null) {
             // Restore state related to selections previously made
             tracker.onRestoreInstanceState(savedInstanceState);
         }
@@ -149,8 +143,6 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         tracker.onSaveInstanceState(outState); // Save state about selections.
     }
 
-    // ------ Buttons' on-click listeners ------ //
-
     public void load_events() {
 
         // Execute the loading task in background:
@@ -159,11 +151,6 @@ public class ListActivity extends AppCompatActivity implements SensorEventListen
         loadingDialog = new LoadingDialog(this);
         loadingDialog.show();
 
-    }
-
-    public void gridLayout(View view) {
-        // Button to see in a grid fashion has been clicked:
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
     }
 
     void update_dataset(){
