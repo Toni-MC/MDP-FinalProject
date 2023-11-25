@@ -55,6 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         Log.d(TAG, "onBindViewHolder() called for element in position " + position +
                 ", Selected? = " + isItemSelected);
+
         holder.bindValues(item, isItemSelected, currentStyle, context);
     }
 
